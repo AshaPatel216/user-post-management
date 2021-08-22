@@ -1,0 +1,42 @@
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-wrapper">
+      <!-- Expand collapse sidebar (Mobile view) -->
+      <div class="navbar-toggle">
+        <button type="button" class="navbar-toggler">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <a class="navbar-brand" href="#pablo">Dashboard</a>
+    </div>
+
+    <!-- Hide show header menu -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" [attr.aria-expanded]="!isHeaderRightMenuExpanded" aria-label="Toggle navigation" (click)="expandCollapseHeaderMenuresponsive()">
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+      <span class="navbar-toggler-bar navbar-kebab"></span>
+    </button>
+
+    <!-- Header right content -->
+    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="now-ui-icons users_single-02"></i>
+            <p class="d-lg-none d-md-block">
+              <span>Account</span>
+            </p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header style -->
+<div class="panel-header panel-header-sm">
+  <canvas id="bigDashboardChart"></canvas>
+</div>

@@ -7,7 +7,9 @@ const routes: Routes = [
     path: '', component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'user', pathMatch: 'full' },
-      { path: 'user', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) }
+      { path: 'user', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+      { path: 'post', loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule) }
+
     ]
   }
  

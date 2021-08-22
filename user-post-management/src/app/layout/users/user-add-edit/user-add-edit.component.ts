@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-add-edit',
-  templateUrl: './user-add-edit.component.html',
-  styleUrls: ['./user-add-edit.component.scss']
+  templateUrl: './user-add-edit.component.html'
 })
 export class UserAddEditComponent implements OnInit {
 
