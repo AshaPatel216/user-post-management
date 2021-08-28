@@ -4,6 +4,28 @@
 */
 
 /*=====================================
+    Style override from theme
+=======================================*/
+.btn { border-radius: 30px !important; }
+
+/*=====================================
     Layout main panel
 =======================================*/
 .main-panel { height: 100%; max-height: 100%; }
+
+
+/*=====================================
+    Login Page
+=======================================*/
+.before-login-layout {
+  .layout-container { min-height: 100vh;
+    .top-background { width: 100%; background: linear-gradient( 90deg,#0c2646 0,#204065 60%,#2a5788); height: 120px; }
+    .contents { background: #f6f7fc; }
+    .container {
+      & > .row { min-height: calc(100vh - 120px); }
+    }
+  }
+  .form-block { background: #fff; padding: 40px; box-shadow: 0 1px 15px 1px rgb(39 39 39 / 10%); border-radius: 0.1875rem; }
+  .control { position: relative; margin-bottom: 15px; cursor: pointer; }
+}
+
