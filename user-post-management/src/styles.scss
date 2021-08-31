@@ -2,6 +2,20 @@
     @Author: Asha Patel
     Custom style fot the theme will be added here
 */
+@import 'assets/scss/now-ui-dashboard/variables';
+
+/*Loader*/
+.loader-container { position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 1; background-color: rgba($light-gray, 0.5);
+
+  .spinner { height: 48px; width: 48px; animation: rotate 1s infinite linear; border: 4px solid $primary-color; border-right-color: transparent; border-radius: 50%; margin: 0 auto; position: absolute; top: 50%; left: 0; right: 0; margin-top: -24px; }
+}
+
+/*Animation for loader spinner*/
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+
+  100% { transform: rotate(360deg); }
+}
 
 /*=====================================
     Style override from theme

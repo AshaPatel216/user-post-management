@@ -8,9 +8,11 @@ import { Observable, Subject } from 'rxjs';
 export class SharedService {
 
   headerLable: Subject<string>;
+  isLoaderLoading: Subject<boolean>;
 
   constructor() {
     this.headerLable = new Subject<string>();
+    this.isLoaderLoading = new Subject<boolean>();
   }
 
 }

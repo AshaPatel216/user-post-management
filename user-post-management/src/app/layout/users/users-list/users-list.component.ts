@@ -7,24 +7,31 @@ import { UsersService } from '../users.service';
   selector: 'app-users-list',
   templateUrl: './users-list.component.html'
 })
-export class UsersListComponent implements OnInit{
+export class UsersListComponent implements OnInit, OnDestroy{
 
   users: User[];
   usersCount: number;
 
-  constructor(private userService: UsersService) {
+  constructor(private userService: UsersService,
+    private sharedService: SharedService) {
     this.users = [];
     this.usersCount = 0;
+    this.sharedService.isLoaderLoading.next(true);
   }
 
   ngOnInit(): void {
-    this.getAllUserList();;
+    this.getAllUserList();
+  }
+
+  ngOnDestroy(): void {
+    this.sharedService.isLoaderLoading.next(false);
   }
 
   /**
    * Get all users list.
    */
   getAllUserList(): void {
+    this.sharedService.isLoaderLoading.next(true);
     this.userService.getAllUsers().subscribe(
       res => {
         this.usersCount = res.length;
@@ -47,9 +54,12 @@ export class UsersListComponent implements OnInit{
             });
           })
         }
+
+        this.sharedService.isLoaderLoading.next(false);
       },
       err => {
-        console.log('Something went wrong.')
+        console.log('Something went wrong.');
+        this.sharedService.isLoaderLoading.next(false);
       }
     );
   }
