@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html'
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private sharedService: SharedService) {
   }
 
+  ngOnInit(): void {
+    this.sharedService.headerLable.next('users');
+  }
+
+  ngOnDestroy(): void {
+    this.sharedService.headerLable.next('');
+  }
 }

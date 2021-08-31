@@ -29,3 +29,23 @@
   .control { position: relative; margin-bottom: 15px; cursor: pointer; }
 }
 
+/*=====================================
+   Users
+=======================================*/
+.users-list-container {
+  .users-list-table {
+    .actions-column { width: 95px; }
+  }
+}
+
+/*=====================================
+   Responsive media query
+=======================================*/
+@media screen and (max-width: 576px) {
+  /*Users list table*/
+  .users-list-container {
+    .users-list-table {
+      table { max-width: 400px; width: 400px; }
+    }
+  }
+}

@@ -1,16 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html'
 })
 
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit{
 
   isHeaderRightMenuExpanded: boolean;
+  headerLable: string;
+  isUsersPageOpen: boolean;
 
-  constructor() {
+  constructor(private sharedService: SharedService) {
     this.isHeaderRightMenuExpanded = true;
+    this.headerLable = '';
+
+    // set header lable based on opened page.
+    this.sharedService.headerLable.subscribe((res) => {
+      this.headerLable = res;
+    });
+
   }
 
   ngOnInit(): void {

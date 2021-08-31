@@ -5,6 +5,7 @@ import { UsersRoutingModule } from './users-routing.module';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserAddEditComponent } from './user-add-edit/user-add-edit.component';
 import { SharedModule } from '../../shared/shared.module';
+import { UsersService } from './users.service';
 
 
 @NgModule({
@@ -17,6 +18,9 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     UsersRoutingModule,
     SharedModule
+  ],
+  providers: [
+    UsersService
   ]
 })
 export class UsersModule { }

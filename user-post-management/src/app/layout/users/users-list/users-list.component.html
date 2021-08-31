@@ -1,13 +1,68 @@
 <!-- Users list -->
-<section>
+<section class="users-list-container">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
+        <!-- Header -->
         <div class="card-header">
-
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center">
+            <h4 class="card-title text-uppercase">All users</h4>
+            <button type="button" rel="tooltip" class="btn btn-primary" [routerLink]="['./../add']">
+              <i class="fas fa-plus mr-2"></i>
+              <span>Add New User</span>
+            </button>
+          </div>
         </div>
+
+        <!-- Content -->
         <div class="card-body">
 
+          <!-- Users List Table -->
+          <div class="users-list-table table-responsive" *ngIf="usersCount > 0">
+            <table class="table">
+
+              <!-- Table header -->
+              <thead class="text-primary text-capitalize">
+                <th>
+                    User name
+                </th>
+                <th>Email</th>
+                 <th class="text-center actions-column">Actions</th>
+              </thead>
+
+              <!-- Table body -->
+                <tr *ngFor="let user of users, let i = index">
+                  <!-- User name -->
+                  <td class="align-middle text-capitalize">
+                    {{user.username}}
+                  </td>
+
+                  <!-- Email -->
+                  <td class="align-middle">
+                    {{user.email}}
+                  </td>
+
+                  <!-- Actions -->
+                  <td class="text-center align-middl">
+                    <!-- Edit -->
+                    <button type="button" rel="tooltip" class="btn btn-primary btn-sm btn-icon mr-2">
+                      <i class="fas fa-edit"></i>
+                    </button>
+
+                    <!-- Delete -->
+                    <button type="button" rel="tooltip" class="btn btn-secondary btn-sm btn-icon">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+
+                </tr>
+            </table>
+          </div>
+
+          <!-- If Users not found -->
+          <div class="text-center" *ngIf="usersCount === 0">
+            <h5>Data not found.</h5>
+          </div>
         </div>
       </div>
     </div>
