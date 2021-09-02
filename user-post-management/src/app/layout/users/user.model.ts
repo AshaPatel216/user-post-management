@@ -1,17 +1,17 @@
 export class User {
-  id: string;
+  id?: string;
   username: string;
   email: string;
-  provider: string;
+  provider?: string;
   password: string;
-  resetPasswordToken: string;
-  confirmed: boolean;
-  blocked: boolean;
-  role: string;
+  resetPasswordToken?: string;
+  confirmed?: boolean;
+  blocked?: boolean;
+  role?: string;
   posts: [string];
-  comments: [string];
-  created_by: string;
-  updated_by: string
+  comments?: [string];
+  created_by?: string;
+  updated_by?: string
 
   constructor() {
     this.confirmed = false;

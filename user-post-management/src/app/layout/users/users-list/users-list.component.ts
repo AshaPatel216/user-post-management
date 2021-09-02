@@ -41,14 +41,7 @@ export class UsersListComponent implements OnInit, OnDestroy{
               id: user.id,
               username: user.username,
               email: user.email,
-              provider: '',
               password: '',
-              resetPasswordToken: '',
-              blocked: false,
-              confirmed: false,
-              created_by: '',
-              updated_by: '',
-              role: '',
               posts: null,
               comments: null
             });

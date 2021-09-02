@@ -15,7 +15,7 @@ export class UsersService {
   headerLable: Subject<string>;
 
   constructor(private http: HttpClient) {
-    this.endPointUrl = 'https://strapi-test.promactinfo.com/';
+    this.endPointUrl = 'https://strapi-test.promactinfo.com';
     this.headerLable = new Subject<string>();
 
   }
@@ -25,5 +25,14 @@ export class UsersService {
    */
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.endPointUrl}/users`);
+  }
+
+  /**
+   * Add User
+   * @param user User object containing user details
+   */
+  addUser(user: User): Observable<User> {
+    console.log(`${this.endPointUrl}/auth​/local​/register`);
+    return this.http.post<User>(`${this.endPointUrl}/auth/local/register`, user);
   }
 }

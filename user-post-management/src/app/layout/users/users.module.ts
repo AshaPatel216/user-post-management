@@ -6,6 +6,7 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { UserAddEditComponent } from './user-add-edit/user-add-edit.component';
 import { SharedModule } from '../../shared/shared.module';
 import { UsersService } from './users.service';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { UsersService } from './users.service';
   imports: [
     CommonModule,
     UsersRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   providers: [
     UsersService

@@ -17,10 +17,17 @@
   100% { transform: rotate(360deg); }
 }
 
+/*Error*/
+.error-container { line-height: 18px; min-height: 20px;
+  span { font-size: $font-size-mini; }
+}
+
 /*=====================================
     Style override from theme
 =======================================*/
 .btn { border-radius: 30px !important; }
+.wrapper { min-height: 100vh; height: unset !important; }
+.invalid-feedback { display: block !important; }
 
 /*=====================================
     Layout main panel
