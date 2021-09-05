@@ -29,6 +29,23 @@
 .wrapper { min-height: 100vh; height: unset !important; }
 .invalid-feedback { display: block !important; }
 
+/*Toaster style*/
+.toast-container {
+  .custom-toast {
+    &.ngx-toastr { padding: 10px 15px 10px 50px;
+      &.toast-success { background-color: $primary-color; }
+      &.toast-error { background-color: $danger-color; }
+    }
+  }
+
+  button {
+    &.toast-close-button {
+      &:hover { color: $white-color; }
+      &:focus { outline: none; }
+    }
+  }
+  .toast-title { padding-top: 5px; }
+}
 /*=====================================
     Layout main panel
 =======================================*/

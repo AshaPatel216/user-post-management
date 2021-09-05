@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { TokenStorageService } from './core/token-storage.service';
+import { User } from './layout/users/user.model';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'user-post-management';
+
+  constructor() {
+  }
 }

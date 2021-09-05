@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { SharedService } from './shared.service';
 import { LoaderComponent } from './loader/loader.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [ 
@@ -12,7 +15,7 @@ import { LoaderComponent } from './loader/loader.component';
     CommonModule
   ],
   exports: [
-    LoaderComponent
+    LoaderComponent,
   ],
   providers: [
     //SharedService

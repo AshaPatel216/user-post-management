@@ -30,7 +30,8 @@
             "styles": [
               "src/styles.scss",
               "src/assets/scss/now-ui-dashboard.scss",
-              "src/assets/demo/demo.css"
+              "src/assets/demo/demo.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "src/assets/js/plugins/chartjs.min.js",
@@ -99,7 +100,8 @@
             "styles": [
               "src/styles.scss",
               "src/assets/scss/now-ui-dashboard.scss",
-              "src/assets/demo/demo.css"
+              "src/assets/demo/demo.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "src/assets/js/plugins/chartjs.min.js",

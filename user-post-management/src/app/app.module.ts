@@ -7,6 +7,9 @@ import { SharedModule } from './shared/shared.module';
 
 import { HttpClientModule } from '@angular/common/http';
 import { SharedService } from './shared/shared.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { authInterceptorProviders } from './core/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,9 +19,11 @@ import { SharedService } from './shared/shared.service';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [authInterceptorProviders ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

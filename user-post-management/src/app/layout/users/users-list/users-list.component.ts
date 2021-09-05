@@ -3,17 +3,21 @@ import { SharedService } from '../../../shared/shared.service';
 import { User } from '../user.model';
 import { UsersService } from '../users.service';
 
+import { ToastrService } from 'ngx-toastr';
+
+
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html'
 })
-export class UsersListComponent implements OnInit, OnDestroy{
+export class UsersListComponent implements OnInit, OnDestroy {
 
   users: User[];
   usersCount: number;
 
   constructor(private userService: UsersService,
-    private sharedService: SharedService) {
+    private sharedService: SharedService,
+    private toastr: ToastrService) {
     this.users = [];
     this.usersCount = 0;
     this.sharedService.isLoaderLoading.next(true);
@@ -51,9 +55,15 @@ export class UsersListComponent implements OnInit, OnDestroy{
         this.sharedService.isLoaderLoading.next(false);
       },
       err => {
-        console.log('Something went wrong.');
+        this.toastr.error('', 'Something went wrong.', {
+          timeOut: 3000,
+          extendedTimeOut: 5000,
+          closeButton: true,
+          toastClass: 'custom-toast ngx-toastr'
+        });
         this.sharedService.isLoaderLoading.next(false);
       }
     );
   }
 }
+

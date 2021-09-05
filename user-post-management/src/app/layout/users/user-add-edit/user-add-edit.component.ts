@@ -1,6 +1,7 @@
 import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../../shared/shared.service';
 import { User } from '../user.model';
 import { UsersService } from '../users.service';
@@ -25,7 +26,8 @@ export class UserAddEditComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private userService: UsersService,
-    private sharedService: SharedService) {
+    private sharedService: SharedService,
+    private toastr: ToastrService) {
 
     this.userId = '';
 
@@ -53,17 +55,27 @@ export class UserAddEditComponent implements OnInit {
    * Add/Edit the user details
    */
   addEditUser(): void {
- 
     this.sharedService.isLoaderLoading.next(true);
+
     this.userService.addUser(this.user).subscribe(
       res => {
         this.sharedService.isLoaderLoading.next(false);
-        console.log("User created successfully.");
+        this.toastr.success('', 'User created successfully.', {
+          timeOut: 3000,
+          extendedTimeOut: 5000,
+          closeButton: true,
+          toastClass: 'custom-toast ngx-toastr'
+        });
         this.goToUserListPage();
       },
       err => {
         this.sharedService.isLoaderLoading.next(false);
-        console.log("Something wnt wrong!");
+        this.toastr.success('', 'Something went wrong.', {
+          timeOut: 3000,
+          extendedTimeOut: 5000,
+          closeButton: true,
+          toastClass: 'custom-toast ngx-toastr'
+        });
       }
     );
   }
