@@ -57,12 +57,7 @@ export class LoginComponent implements OnInit {
           this.isLogInFailed = true;
         }
         else {
-          this.toastr.error('', 'Something went wrong.', {
-            timeOut: 3000,
-            extendedTimeOut: 5000,
-            closeButton: true,
-            toastClass: 'custom-toast ngx-toastr'
-          });
+          this.sharedService.errorResponse();
         }
         this.sharedService.isLoaderLoading.next(false);
         this.tokenStorageService.logout();

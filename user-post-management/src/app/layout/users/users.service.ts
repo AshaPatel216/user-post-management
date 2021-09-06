@@ -38,4 +38,24 @@ export class UsersService {
   addUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.endPointUrl}/auth/local/register`, user, httpOptions);
   }
+
+  /**
+   * Delete user
+   * @param userId Id of the user that needs to be deleted
+   */
+  deleteUser(userId: string) {
+    return this.http.delete(`${this.endPointUrl}/users/${userId}`);
+  }
+
+  /**
+   * Get user details by id.
+   * @param userId Id to fetch user details by id
+   */
+  getUserDetailsById(userId: string): Observable<User>{
+    return this.http.get<User>(`${this.endPointUrl}/users/${userId}`);
+  }
+
+  editUserDetails(userId: String, user: User) {
+    return this.http.put(`${this.endPointUrl}/users/${userId}`, user);
+  }
 }

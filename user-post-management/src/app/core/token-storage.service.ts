@@ -11,7 +11,11 @@ const USER_KEY = 'auth-user';
 })
 export class TokenStorageService {
 
-  constructor() { }
+  loggedInUserId: string;
+
+  constructor() {
+    this.loggedInUserId = '';
+  }
 
   /**
    * Logout.

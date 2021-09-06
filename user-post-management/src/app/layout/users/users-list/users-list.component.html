@@ -45,12 +45,12 @@
                 <!-- Actions -->
                 <td class="text-center align-middl">
                   <!-- Edit -->
-                  <button type="button" rel="tooltip" class="btn btn-primary btn-sm btn-icon mr-2">
+                  <button type="button" rel="tooltip" class="btn btn-primary btn-sm btn-icon mr-2" [routerLink]="['./../edit',user.id]">
                     <i class="fas fa-edit"></i>
                   </button>
 
                   <!-- Delete -->
-                  <button type="button" rel="tooltip" class="btn btn-secondary btn-sm btn-icon">
+                  <button type="button" rel="tooltip" class="btn btn-secondary btn-sm btn-icon" [disabled]="user.id === loggedInUserId" (click)="deleteUser(user.id)">
                     <i class="fas fa-trash"></i>
                   </button>
                 </td>

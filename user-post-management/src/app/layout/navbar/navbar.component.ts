@@ -1,4 +1,7 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenStorageService } from '../../core/token-storage.service';
 import { SharedService } from '../../shared/shared.service';
 
 @Component({
@@ -12,7 +15,9 @@ export class NavbarComponent implements OnInit{
   headerLable: string;
   isUsersPageOpen: boolean;
 
-  constructor(private sharedService: SharedService) {
+  constructor(private sharedService: SharedService,
+    private tokenStorageService: TokenStorageService,
+    private router: Router) {
     this.isHeaderRightMenuExpanded = true;
     this.headerLable = '';
 
@@ -40,5 +45,15 @@ export class NavbarComponent implements OnInit{
       navbar.classList.add('navbar-transparent');
       navbar.classList.remove('bg-white');
     }
+  }
+
+  /**
+   * Logout
+   */
+  logout(): void {
+    this.sharedService.isLoaderLoading.next(true);
+    this.tokenStorageService.logout();
+    this.sharedService.isLoaderLoading.next(false);
+    this.router.navigateByUrl('account');
   }
 }

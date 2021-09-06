@@ -2,6 +2,7 @@ import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { TokenStorageService } from '../../../core/token-storage.service';
 import { SharedService } from '../../../shared/shared.service';
 import { User } from '../user.model';
 import { UsersService } from '../users.service';
@@ -22,12 +23,13 @@ export class UserAddEditComponent implements OnInit {
   pageHeaderLable: string;
 
   isPassowrdConfirmPasswordMatch: boolean;
+  loggedInUserId: string;
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private userService: UsersService,
     private sharedService: SharedService,
-    private toastr: ToastrService) {
+    private tokenStorageService: TokenStorageService) {
 
     this.userId = '';
 
@@ -42,9 +44,13 @@ export class UserAddEditComponent implements OnInit {
     this.userId === undefined ? this.isUserAddPage = true : this.isUserAddPage = false;
     this.isUserAddPage ? this.pageHeaderLable = 'Add user' : this.pageHeaderLable = 'Edit user';
 
-    // Create new object for add new user
-    if (this.isUserAddPage) {
-      this.user = new User();
+    this.user = new User();
+
+    this.loggedInUserId = this.tokenStorageService.loggedInUserId;
+
+    // Get existing user data to edit.
+    if (!this.isUserAddPage) {
+      this.getExistingUserData();
     }
   }
 
@@ -57,27 +63,32 @@ export class UserAddEditComponent implements OnInit {
   addEditUser(): void {
     this.sharedService.isLoaderLoading.next(true);
 
-    this.userService.addUser(this.user).subscribe(
-      res => {
-        this.sharedService.isLoaderLoading.next(false);
-        this.toastr.success('', 'User created successfully.', {
-          timeOut: 3000,
-          extendedTimeOut: 5000,
-          closeButton: true,
-          toastClass: 'custom-toast ngx-toastr'
-        });
-        this.goToUserListPage();
-      },
-      err => {
-        this.sharedService.isLoaderLoading.next(false);
-        this.toastr.success('', 'Something went wrong.', {
-          timeOut: 3000,
-          extendedTimeOut: 5000,
-          closeButton: true,
-          toastClass: 'custom-toast ngx-toastr'
-        });
-      }
-    );
+    if (this.isUserAddPage) {
+
+      this.userService.addUser(this.user).subscribe(
+        res => {
+          this.sharedService.isLoaderLoading.next(false);
+          this.sharedService.successResponse('User created successfully.'); 
+          this.goToUserListPage();
+        },
+        err => {
+          this.errorResponse();
+        }
+      );
+    }
+
+    else {
+      this.userService.editUserDetails(this.userId, this.user).subscribe(
+        res => {
+          this.sharedService.isLoaderLoading.next(false);
+          this.sharedService.successResponse('User updated successfully.'); 
+          this.goToUserListPage();
+        },
+        err => {
+          this.errorResponse();
+        }
+      );
+    }
   }
 
   /**
@@ -85,5 +96,31 @@ export class UserAddEditComponent implements OnInit {
    */
   goToUserListPage(): void {
     this.router.navigateByUrl('main/user/list');
+  }
+
+  /**
+   * Get user detail to edit
+   */
+  getExistingUserData(): void {
+    this.sharedService.isLoaderLoading.next(true);
+    this.userService.getUserDetailsById(this.userId).subscribe(
+      res => {
+        this.user.id = res.id;
+        this.user.username = res.username;
+        this.user.email = res.email;
+        this.sharedService.isLoaderLoading.next(false);
+      },
+      err => {
+        this.errorResponse();
+      }
+    )
+  }
+
+  /**
+   * Error response
+   */
+  errorResponse(): void {
+    this.sharedService.errorResponse();
+    this.sharedService.isLoaderLoading.next(false);
   }
 }

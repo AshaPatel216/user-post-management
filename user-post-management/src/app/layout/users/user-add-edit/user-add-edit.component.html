@@ -32,7 +32,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="email">Email address</label><span class="text-danger">*</span>
-                    <input type="email" name="email" class="form-control" placeholder="Email" minlength="6" [(ngModel)]="user.email" #email="ngModel" pattern="^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$" required>
+                    <input type="email" name="email" class="form-control" placeholder="Email" minlength="6" [(ngModel)]="user.email" #email="ngModel" pattern="^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$" required [readonly]="user.id === loggedInUserId">
                     <div class="error-container">
                       <span class="text-danger" *ngIf="userAddEditFrom.submitted && email.errors?.required">This field is mandatory.</span>
                       <span class="text-danger" *ngIf="userAddEditFrom.submitted && email.errors?.minlength">Minimum 6 characters required.</span>
@@ -41,54 +41,57 @@
                   </div>
                 </div>
 
-                <!-- Password -->
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div>
-                        <label>Password</label><span class="text-danger">*</span>
+                <ng-container *ngIf="isUserAddPage">
+                  <!-- Password -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <label>Password</label><span class="text-danger">*</span>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox"
+                                   class="align-middle"
+                                   [checked]="isShowPasswordChecked"
+                                   (change)="isShowPasswordChecked = !isShowPasswordChecked">
+                            <span class="align-middle ml-2">Show Password</span>
+                          </label>
+                        </div>
                       </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"
-                                 class="align-middle"
-                                 [checked]="isShowPasswordChecked"
-                                 (change)="isShowPasswordChecked = !isShowPasswordChecked">
-                          <span class="align-middle ml-2">Show Password</span>
-                        </label>
+                      <input [type]="!isShowPasswordChecked ? 'password' : 'text'" name="password" class="form-control" placeholder="Password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,15}$" minlength="6" maxlength="15" [(ngModel)]="user.password" #password="ngModel" autocomplete="off" required>
+                      <div class="error-container">
+                        <span class="text-danger" *ngIf="userAddEditFrom.submitted && password.errors?.required">This field is mandatory.</span>
+                        <span class="text-danger" *ngIf="userAddEditFrom.submitted && (password.errors?.minlength || password.errors?.maxlength)">Password must be between 6-15 characters.</span>
+                        <span class="text-danger" *ngIf="userAddEditFrom.submitted && password.errors?.pattern && !(password.errors?.minlength || password.errors?.maxlength)">The password must contain at least one number, one special character & mixture of uppercase & lowercase letters.</span>
                       </div>
-                    </div>
-                    <input [type]="!isShowPasswordChecked ? 'password' : 'text'" name="password" class="form-control" placeholder="Password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,15}$" minlength="6" maxlength="15" [(ngModel)]="user.password" #password="ngModel" autocomplete="off" required>
-                    <div class="error-container">
-                      <span class="text-danger" *ngIf="userAddEditFrom.submitted && password.errors?.required">This field is mandatory.</span>
-                      <span class="text-danger" *ngIf="userAddEditFrom.submitted && (password.errors?.minlength || password.errors?.maxlength)">Password must be between 6-15 characters.</span>
-                      <span class="text-danger" *ngIf="userAddEditFrom.submitted && password.errors?.pattern && !(password.errors?.minlength || password.errors?.maxlength)">The password must contain at least one number, one special character & mixture of uppercase & lowercase letters.</span>
                     </div>
                   </div>
-                </div>
 
-                <!-- Confirm Password -->
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <label>Confirm Password</label>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"
-                                 class="align-middle"
-                                 [checked]="isShowConfirmPasswordChecked"
-                                 (change)="isShowConfirmPasswordChecked = !isShowConfirmPasswordChecked">
-                          <span class="align-middle ml-2">Show Password</span>
-                        </label>
+                  <!-- Confirm Password -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <label>Confirm Password</label>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox"
+                                   class="align-middle"
+                                   [checked]="isShowConfirmPasswordChecked"
+                                   (change)="isShowConfirmPasswordChecked = !isShowConfirmPasswordChecked">
+                            <span class="align-middle ml-2">Show Password</span>
+                          </label>
+                        </div>
+                      </div>
+                      <input [type]="!isShowConfirmPasswordChecked ? 'password' : 'text'" name="confirmPassword" class="form-control" placeholder=" Confirm Password" [(ngModel)]="confirmPassword" #confirm="ngModel" autocomplete="new-password" required>
+                      <div class="error-container">
+                        <span class="text-danger" *ngIf="userAddEditFrom.submitted && !(password.errors?.required) && confirm.errors?.required">Re enter the password.</span>
+                        <span class="text-danger" *ngIf="userAddEditFrom.submitted && (user.password !== confirmPassword) && !(confirm.errors?.required)">Password does not match.</span>
                       </div>
                     </div>
-                    <input [type]="!isShowConfirmPasswordChecked ? 'password' : 'text'" name="confirmPassword" class="form-control" placeholder=" Confirm Password" [(ngModel)]="confirmPassword" #confirm="ngModel" autocomplete="new-password" required>
-                    <div class="error-container">
-                      <span class="text-danger" *ngIf="userAddEditFrom.submitted && !(password.errors?.required) && confirm.errors?.required">Re enter the password.</span>
-                      <span class="text-danger" *ngIf="userAddEditFrom.submitted && (user.password !== confirmPassword) && !(confirm.errors?.required)">Password does not match.</span>
-                    </div>
                   </div>
-                </div>
+                </ng-container>
+               
 
                 <!-- Actions -->
                 <div class="col-12 text-right mt-2">

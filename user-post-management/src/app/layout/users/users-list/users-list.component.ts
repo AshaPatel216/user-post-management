@@ -4,6 +4,7 @@ import { User } from '../user.model';
 import { UsersService } from '../users.service';
 
 import { ToastrService } from 'ngx-toastr';
+import { TokenStorageService } from '../../../core/token-storage.service';
 
 
 @Component({
@@ -14,13 +15,16 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   users: User[];
   usersCount: number;
+  loggedInUserId: string;
 
   constructor(private userService: UsersService,
     private sharedService: SharedService,
-    private toastr: ToastrService) {
+    private tokenStorageService: TokenStorageService) {
     this.users = [];
     this.usersCount = 0;
+    this.loggedInUserId = '';
     this.sharedService.isLoaderLoading.next(true);
+    this.loggedInUserId = this.tokenStorageService.loggedInUserId;
   }
 
   ngOnInit(): void {
@@ -38,32 +42,60 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.sharedService.isLoaderLoading.next(true);
     this.userService.getAllUsers().subscribe(
       res => {
-        this.usersCount = res.length;
-        if (this.usersCount > 0) {
-          res.forEach((user: User) => {
-            this.users.push({
-              id: user.id,
-              username: user.username,
-              email: user.email,
-              password: '',
-              posts: null,
-              comments: null
-            });
-          })
-        }
-
-        this.sharedService.isLoaderLoading.next(false);
+        this.getUserListResponse(res);
       },
       err => {
-        this.toastr.error('', 'Something went wrong.', {
-          timeOut: 3000,
-          extendedTimeOut: 5000,
-          closeButton: true,
-          toastClass: 'custom-toast ngx-toastr'
-        });
-        this.sharedService.isLoaderLoading.next(false);
+        this.errorResponse();
       }
     );
+  }
+
+  /**
+   * Response of the user list
+   * @param res Response from backend.
+   */
+  getUserListResponse(res: User[]): void {
+    this.usersCount = res.length;
+    if (this.usersCount > 0) {
+      res.forEach((user: User) => {
+        this.users.push({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          password: '',
+          posts: null,
+          comments: null
+        });
+      })
+    }
+    this.sharedService.isLoaderLoading.next(false);
+  }
+
+  /**
+   * Delete user.
+   * @param userId Id of the user that needs to be deleted
+   */
+  deleteUser(userId: string): void {
+    this.sharedService.isLoaderLoading.next(true);
+    this.userService.deleteUser(userId).subscribe(
+      res => {
+        this.sharedService.successResponse('User deleted successfully.');
+        this.sharedService.isLoaderLoading.next(false);
+        this.users = [];
+        this.getAllUserList();
+      },
+      err => {
+        this.errorResponse();
+      }
+    );
+  }
+
+  /**
+   * Error response
+   */
+  errorResponse(): void {
+    this.sharedService.errorResponse();
+    this.sharedService.isLoaderLoading.next(false);
   }
 }
 
