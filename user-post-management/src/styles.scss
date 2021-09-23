@@ -3,6 +3,7 @@
     Custom style fot the theme will be added here
 */
 @import 'assets/scss/now-ui-dashboard/variables';
+@import 'assets/scss/now-ui-dashboard/mixins';
 
 /*Loader*/
 .loader-container { position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 1; background-color: rgba($light-gray, 0.5);
@@ -28,6 +29,8 @@
 .btn { border-radius: 30px !important; }
 .wrapper { min-height: 100vh; height: unset !important; }
 .invalid-feedback { display: block !important; }
+.bg-white { background-color: $white-color; }
+.z-index-1 { z-index: 1; }
 
 /*Toaster style*/
 .toast-container {
@@ -46,6 +49,7 @@
   }
   .toast-title { padding-top: 5px; }
 }
+
 /*=====================================
     Layout main panel
 =======================================*/
@@ -77,11 +81,35 @@
 }
 
 /*=====================================
+   Posts
+=======================================*/
+/*All post list*/
+.post-list-container { margin-right: -1px; background-color: $white-bg;
+  .individual-post-list {
+    padding: 10px;
+    border: 1px solid $light-gray;
+    border-width: 1px 1px 0;
+    font-size: $font-size-h6;
+    @include transition(0.2s all);
+    &:last-child { border-bottom-width: 1px; }
+    &:hover { color: $primary-color; cursor: pointer; background-color: rgba($light-gray, 0.1); }
+    &.is-selected { border-right-width: 0; color: $primary-color; }
+
+    .post-description {
+      @include multi-line-ellipsis(2, 18px);
+    }
+
+    .fa-comments { color: rgba($black-color, 0.5); }
+  }
+}
+
+
+.post-details-container { border: 1px solid $light-gray; }
+
+/*=====================================
    Responsive media query
 =======================================*/
-@media screen and (max-width: 576px) {
-  /*Users list table*/
-  .users-list-container {
+@media screen and (max-width: 576px) { /*Users list table*/ .users-list-container {
     .users-list-table {
       table { max-width: 400px; width: 400px; }
     }
