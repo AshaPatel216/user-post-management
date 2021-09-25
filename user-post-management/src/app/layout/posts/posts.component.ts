@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { SharedService } from '../../shared/shared.service';
 import { Post, Comment } from './post.model';
 import { PostsService } from './posts.service';
@@ -13,13 +14,20 @@ export class PostsComponent implements OnInit {
   comments: Comment[];
 
   constructor(private postsService: PostsService,
-    private sharedService: SharedService) {
+    private sharedService: SharedService,
+    private router: Router) {
     this.posts = [];
+    this.sharedService.isLoaderLoading.next(true);
+    this.getAllPostsList();
   }
 
 
   ngOnInit(): void {
-    this.getAllPostsList();
+    this.sharedService.headerLable.next('posts');
+  }
+
+  ngOnDestroy(): void {
+    this.sharedService.headerLable.next('');
   }
 
   getAllPostsList(): void {
@@ -38,8 +46,6 @@ export class PostsComponent implements OnInit {
               );
             });
           }
-
-
           this.posts.push(
             {
               'id': post.id,
@@ -50,17 +56,37 @@ export class PostsComponent implements OnInit {
             }
           );
         });
+        this.posts.map(post => {
+          if (post.isPostSelected) {
+            this.router.navigate(['post', post.id]);
+          }
+        });
+        this.sharedService.isLoaderLoading.next(false);
       },
-      err => { this.sharedService.errorResponse(); }
+      err => {
+        this.sharedService.isLoaderLoading.next(false);
+        this.sharedService.errorResponse();
+      }
     )
   }
 
 
   showPostDetails(postId: string): void {
-    console.log("Post Id" + postId);
     // change isSelected boolean
     this.posts.forEach(post => {
       post.id === postId ? post.isPostSelected = true : post.isPostSelected = false;
     })
+  }
+
+  addNewPost(): void {
+    this.sharedService.isLoaderLoading.next(true);
+    this.posts.map(post => {
+      if (post.isPostSelected) {
+        post.isPostSelected = false;
+      }
+    });
+    this.sharedService.isLoaderLoading.next(false);
+    this.router.navigate(['/post/add']);
+    window.location.reload;
   }
 }

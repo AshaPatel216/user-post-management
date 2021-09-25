@@ -8,8 +8,7 @@ const routes: Routes = [
   {
     path: '', component: PostsComponent,
     children: [
-      { path: '', redirectTo: '1', pathMatch: 'full' },
-      { path: '1', component: PostDetailsComponent },
+      { path: ':postId', component: PostDetailsComponent },
       { path: 'add', component: AddPostComponent }
     ]
   }
