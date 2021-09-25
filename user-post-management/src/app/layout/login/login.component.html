@@ -1,0 +1,59 @@
+<!-- User login -->
+<section class="before-login-layout">
+  <div class="layout-container">
+    <div class="top-background order-1 order-md-2"></div>
+    <div class="contents order-2 order-md-1">
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-6">
+            <div class="form-block">
+              <div class="text-center mb-1">
+                <h3 class="mb-1">Login</h3>
+                <div class="error-container">
+                  <span class="text-danger" *ngIf="loginForm.submitted && isLogInFailed">Invalid email or password.</span>
+                </div>
+              </div>
+              <form #loginForm="ngForm" (ngSubmit)="login()">
+                <!-- Email -->
+                <div class="form-group first">
+                  <label for="email">Email</label>
+                  <input type="email" name="email" class="form-control" placeholder="your-email@gmail.com" id="email" [(ngModel)]="userEmail" #email="ngModel" minlength="6" pattern="^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$" required>
+                  <div class="error-container">
+                    <span class="text-danger" *ngIf="loginForm.submitted && email.errors?.required">This field is mandatory.</span>
+                    <span class="text-danger" *ngIf="loginForm.submitted && email.errors?.minlength">Minimum 6 characters required.</span>
+                    <span class="text-danger" *ngIf="loginForm.submitted && email.errors?.pattern && !email.errors?.minlength">Invalid Email address.</span>
+                  </div>
+                </div>
+                <!-- Password -->
+                <div class="form-group last mb-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <label>Password</label><span class="text-danger">*</span>
+                    </div>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"
+                               class="align-middle"
+                               [checked]="isShowPasswordChecked"
+                               (change)="isShowPasswordChecked = !isShowPasswordChecked">
+                        <span class="align-middle ml-2">Show Password</span>
+                      </label>
+                    </div>
+                  </div>
+                  <input [type]="!isShowPasswordChecked ? 'password' : 'text'" name="password" class="form-control" placeholder="Your Password" id="password" [(ngModel)]="userPassowrd" #password="ngModel" minlength="6" maxlength="15" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,15}$" required>
+                  <div class="error-container">
+                    <span class="text-danger" *ngIf="loginForm.submitted && password.errors?.required">This field is mandatory.</span>
+                    <span class="text-danger" *ngIf="loginForm.submitted && (password.errors?.minlength || password.errors?.maxlength)">Password must be between 6-15 characters.</span>
+                    <span class="text-danger" *ngIf="loginForm.submitted && password.errors?.pattern && !(password.errors?.minlength || password.errors?.maxlength)">The password must contain at least one number, one special character & mixture of uppercase & lowercase letters.</span>
+                  </div>
+                </div>
+                <!-- Login -->
+                <input type="submit" value="Log In" class="btn btn-block btn-primary">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
