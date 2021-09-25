@@ -10,10 +10,12 @@ export class SharedService {
 
   headerLable: Subject<string>;
   isLoaderLoading: Subject<boolean>;
+  isUserLoggedIn: Subject<boolean>;
 
   constructor(private toastr: ToastrService) {
     this.headerLable = new Subject<string>();
     this.isLoaderLoading = new Subject<boolean>();
+    this.isUserLoggedIn = new Subject<boolean>();
   }
 
   /**

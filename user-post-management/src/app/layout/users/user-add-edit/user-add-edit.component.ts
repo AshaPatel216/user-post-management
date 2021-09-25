@@ -95,7 +95,7 @@ export class UserAddEditComponent implements OnInit {
    * Redirect to the user list page.
    */
   goToUserListPage(): void {
-    this.router.navigateByUrl('main/user/list');
+    this.router.navigateByUrl('user/list');
   }
 
   /**

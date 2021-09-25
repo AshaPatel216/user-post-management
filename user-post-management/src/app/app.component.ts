@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { TokenStorageService } from './core/token-storage.service';
-import { User } from './layout/users/user.model';
+import { SharedService } from './shared/shared.service';
 
 @Component({
   selector: 'app-root',

@@ -69,6 +69,7 @@ export class LoginComponent implements OnInit {
    * Go to dashboard.
    */
   goToDashboard(): void {
-    this.router.navigateByUrl('main');
+    this.sharedService.isUserLoggedIn.next(true);
+    this.router.navigateByUrl('user');
   }
 }

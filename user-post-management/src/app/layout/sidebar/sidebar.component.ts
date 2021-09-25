@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SidebarMenuItem } from './sidebar-menu-item.model';
 
@@ -6,7 +6,7 @@ import { SidebarMenuItem } from './sidebar-menu-item.model';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html'
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, AfterContentChecked{
 
   sidebarMenuItems: SidebarMenuItem[];
   selectedSidebarMenuLink: string;
@@ -15,10 +15,13 @@ export class SidebarComponent implements OnInit {
     this.selectedSidebarMenuLink = '';
     this.sidebarMenuItems = [];
     this.setSidebarMenuItems();
-    this.setActiveLink();
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterContentChecked(): void {
+    this.setActiveLink();
   }
 
   /**
@@ -35,20 +38,15 @@ export class SidebarComponent implements OnInit {
    * Set sidebar link active
    */
   setActiveLink(): void {
-    this.router.events
-      .subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          this.sidebarMenuItems.forEach(item => {
-            this.selectedSidebarMenuLink = item.path!;
-            // Make sidebar link active if route matches
-            if (event.urlAfterRedirects.includes(this.selectedSidebarMenuLink)) {
-              item.isActive = true;
-            }
-            else {
-              item.isActive = false;
-            }
-          })
-        }
-      })
+    this.sidebarMenuItems.forEach(item => {
+      this.selectedSidebarMenuLink = item.path;
+      // Make sidebar link active if route matches
+      if (this.router.url.includes(this.selectedSidebarMenuLink)) {
+        item.isActive = true;
+      }
+      else {
+        item.isActive = false;
+      }
+    })
   }
 }

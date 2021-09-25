@@ -1,5 +1,5 @@
-
-<div class="wrapper">
+<!-- If User Logged In -->
+<div class="wrapper" *ngIf="isUserLoggedIn">
 
   <!-- Sidenar -->
   <div class="sidebar" data-color="orange">
@@ -20,4 +20,10 @@
     </div>
 
   </div>
+</div>
+
+
+<!-- If Not LoggedIn -->
+<div *ngIf="!isUserLoggedIn">
+  <router-outlet></router-outlet>
 </div>

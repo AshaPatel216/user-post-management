@@ -2,6 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { User } from '../layout/users/user.model';
+import { SharedService } from '../shared/shared.service';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -13,7 +14,7 @@ export class TokenStorageService {
 
   loggedInUserId: string;
 
-  constructor() {
+  constructor(private shareService: SharedService) {
     this.loggedInUserId = '';
   }
 
@@ -22,6 +23,7 @@ export class TokenStorageService {
    */
   logout() {
     window.sessionStorage.clear();
+    this.shareService.isUserLoggedIn.next(false);
   }
 
   /**

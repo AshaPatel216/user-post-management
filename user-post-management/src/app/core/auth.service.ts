@@ -17,9 +17,7 @@ export class AuthService {
 
   authUrl: string;
 
-  constructor(private http: HttpClient) {
-    this.authUrl = 'https://strapi-test.promactinfo.com/auth';
-  }
+  constructor(private http: HttpClient) {  }
 
   /**
   * Login to the system
