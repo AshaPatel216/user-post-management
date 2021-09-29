@@ -18,11 +18,11 @@ export class PostsComponent implements OnInit {
     private router: Router) {
     this.posts = [];
     this.sharedService.isLoaderLoading.next(true);
-    this.getAllPostsList();
   }
 
 
   ngOnInit(): void {
+    this.getAllPostsList();
     this.sharedService.headerLable.next('posts');
   }
 
@@ -87,6 +87,5 @@ export class PostsComponent implements OnInit {
     });
     this.sharedService.isLoaderLoading.next(false);
     this.router.navigate(['/post/add']);
-    window.location.reload;
   }
 }
