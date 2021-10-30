@@ -10,7 +10,7 @@ import { User } from './users/user.model';
 })
 export class LayoutComponent implements OnInit {
   title = 'user-post-management';
-  isUserLoggedIn: boolean;
+  hasUserLoggedIn: boolean;
   currentLoggedInUser: User;
   LoggedInUserName: string;
 
@@ -18,10 +18,10 @@ export class LayoutComponent implements OnInit {
     private sharedService: SharedService,
     private router: Router) {
 
-    this.isUserLoggedIn = false;
+    this.hasUserLoggedIn = false;
 
     if (this.tokenStorageService.getToken()) {
-      this.isUserLoggedIn = true;
+      this.hasUserLoggedIn = true;
       this.sharedService.isUserLoggedIn.next(true);
       const user = this.tokenStorageService.getUser();
       this.LoggedInUserName = user.username;
@@ -34,7 +34,7 @@ export class LayoutComponent implements OnInit {
     }
 
     this.sharedService.isUserLoggedIn.subscribe(res => {
-      this.isUserLoggedIn = res;
+      this.hasUserLoggedIn = res;
     })
   }
 

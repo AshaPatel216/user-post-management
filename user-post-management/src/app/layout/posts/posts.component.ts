@@ -30,6 +30,9 @@ export class PostsComponent implements OnInit {
     this.sharedService.headerLable.next('');
   }
 
+  /**
+   * Get All Post
+   */
   getAllPostsList(): void {
     this.postsService.getAllPosts().subscribe(
       res => {
@@ -52,7 +55,8 @@ export class PostsComponent implements OnInit {
               'description': post.description,
               'comments': this.comments,
               'totalComment': this.comments.length,
-              'isPostSelected': index === 0 ? true : false
+              'isPostSelected': index === 0 ? true : false,
+              'media': []
             }
           );
         });

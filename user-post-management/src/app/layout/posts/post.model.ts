@@ -4,22 +4,22 @@ export class Post {
   totalComment: number;
   isPostSelected?: boolean;
   comments: Comment[];
- // media: Media[];
+  media: Media[];
 }
 
 
 export class Media {
   id: string;
   name: string;
-  alternativeText: string;
-  caption: string;
-  width: 0;
-  height: 0;
-  formats: {};
-  hash: string;
-  ext: string;
-  mime: string;
-  size: 0;
+  alternativeText?: string;
+  caption?: string;
+  width?: 0;
+  height?: 0;
+  formats?: {};
+  hash?: string;
+  ext?: string;
+  mime?: string;
+  size?: 0;
   url: string;
 }
 

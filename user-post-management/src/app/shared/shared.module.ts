@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   providers: [
-    //SharedService
+    SharedService
   ]
 })
 export class SharedModule { }

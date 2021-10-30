@@ -20,4 +20,12 @@ export class PostsService {
   getAllPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.endPointUrl}/posts`);
   }
+
+  uploadImage(formData) {
+    return this.http.post(`${this.endPointUrl}/upload`, formData);
+  }
+
+  createPost(post) {
+    return this.http.post(`${this.endPointUrl}/posts`, post)
+  }
 }

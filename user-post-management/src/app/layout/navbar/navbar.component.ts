@@ -54,6 +54,7 @@ export class NavbarComponent implements OnInit{
     this.sharedService.isLoaderLoading.next(true);
     this.tokenStorageService.logout();
     this.sharedService.isLoaderLoading.next(false);
+    this.sharedService.isUserLoggedIn.next(false);
     this.router.navigateByUrl('login');
   }
 }

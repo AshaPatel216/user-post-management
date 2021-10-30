@@ -6,7 +6,7 @@
 @import 'assets/scss/now-ui-dashboard/mixins';
 
 /*Loader*/
-.loader-container { position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 1; background-color: rgba($light-gray, 0.5);
+.loader-container { position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 2; background-color: rgba($light-gray, 0.5);
 
   .spinner { height: 48px; width: 48px; animation: rotate 1s infinite linear; border: 4px solid $primary-color; border-right-color: transparent; border-radius: 50%; margin: 0 auto; position: absolute; top: 50%; left: 0; right: 0; margin-top: -24px; }
 }
@@ -31,6 +31,8 @@
 .invalid-feedback { display: block !important; }
 .bg-white { background-color: $white-color; }
 .z-index-1 { z-index: 1; }
+.height-percent-100 { height: 100%; }
+.cursor-pointer { cursor: pointer; }
 
 /*Toaster style*/
 .toast-container {
@@ -106,6 +108,26 @@
 
 .post-details-container { border: 1px solid $light-gray; }
 
+
+.add-post-container {
+  .card { box-shadow: none;
+    .card-header { border-bottom: 1px solid $light-gray; }
+  }
+}
+
+.upload-post-image-block {vertical-align: top; position: relative; cursor:pointer; height: 150px; width: 150px; border-radius: 5px; border: 1px dashed $primary-color; background-color: rgba( $primary-color, 0.1) }
+.uploaded-post-image-block {vertical-align: top; position: relative; border-radius: 5px; padding: 5px; height: 150px; width: 150px; border: 1px solid $light-gray;
+  img { max-height: 100%; max-width: 100%; border-radius: inherit; }
+  .btn {
+    &:not(.btn-icon) {
+      .now-ui-icons { top: 0 }
+    }
+
+
+
+    &.remove-image-icon { border-radius: 50%; height: 20px; width: 20px; padding: 0; position: absolute; top: -8px; right: -8px; }
+  }
+}
 /*=====================================
    Responsive media query
 =======================================*/
