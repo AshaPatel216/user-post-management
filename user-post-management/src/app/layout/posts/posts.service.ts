@@ -9,7 +9,6 @@ import { Post } from './post.model';
 export class PostsService {
 
   endPointUrl: string;
-
   constructor(private http: HttpClient) {
     this.endPointUrl = 'https://strapi-test.promactinfo.com';
   }
@@ -21,11 +20,24 @@ export class PostsService {
     return this.http.get<Post[]>(`${this.endPointUrl}/posts`);
   }
 
+  /**
+   * Upload post image
+   * @param formData file data to upload
+   */
   uploadImage(formData) {
     return this.http.post(`${this.endPointUrl}/upload`, formData);
   }
 
+  /**
+   * Create Post
+   * @param post Post object
+   */
   createPost(post) {
     return this.http.post(`${this.endPointUrl}/posts`, post)
   }
+
+  getPostDetails(postId) {
+    return this.http.get(`${this.endPointUrl}/posts`, postId);
+  }
+
 }

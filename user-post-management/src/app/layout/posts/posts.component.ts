@@ -74,7 +74,10 @@ export class PostsComponent implements OnInit {
     )
   }
 
-
+  /**
+   * Make selected post as active
+   * @param postId Id of the selected post
+   */
   showPostDetails(postId: string): void {
     // change isSelected boolean
     this.posts.forEach(post => {
@@ -82,6 +85,9 @@ export class PostsComponent implements OnInit {
     })
   }
 
+  /**
+   * Go to add new post page.
+   */
   addNewPost(): void {
     this.sharedService.isLoaderLoading.next(true);
     this.posts.map(post => {

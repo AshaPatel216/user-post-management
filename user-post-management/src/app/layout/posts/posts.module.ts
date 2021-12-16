@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { PostsRoutingModule } from './posts-routing.module';
 import { AddPostComponent } from './add-post/add-post.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { CommentsComponent } from './comments/comments.component';
 
 
 
@@ -12,7 +13,8 @@ import { PostDetailsComponent } from './post-details/post-details.component';
   declarations: [
     PostsComponent,
     AddPostComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    CommentsComponent
   ],
   imports: [
     CommonModule,
