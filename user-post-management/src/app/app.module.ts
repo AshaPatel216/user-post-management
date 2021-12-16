@@ -10,10 +10,16 @@ import { SharedService } from './shared/shared.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { authInterceptorProviders } from './core/auth.interceptor';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { LoginComponent } from './layout/login/login.component';
+import { NavbarComponent } from './layout/navbar/navbar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SidebarComponent,
+    LoginComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
