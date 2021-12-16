@@ -1,20 +1,20 @@
 <!-- If User Logged In -->
-<div class="wrapper" *ngIf="hasUserLoggedIn">
+<div [ngClass]="{'wrapper' : hasUserLoggedIn}">
 
   <!-- Sidenar -->
-  <div class="sidebar" data-color="orange">
+  <div class="sidebar" data-color="orange" *ngIf="hasUserLoggedIn">
     <app-sidebar></app-sidebar>
   </div>
-  <div class="main-panel">
+  <div [ngClass]="{'main-panel' : hasUserLoggedIn}">
 
     <!-- Navbar header -->
-    <app-navbar></app-navbar>
+    <app-navbar *ngIf="hasUserLoggedIn"></app-navbar>
 
     <!-- Content -->
-    <div class="content position-relative">
+    <div [ngClass]="{'content position-relative' : hasUserLoggedIn}" class="">
 
       <!-- Loader -->
-      <app-loader></app-loader>
+      <app-loader *ngIf="hasUserLoggedIn"></app-loader>
 
       <router-outlet></router-outlet>
     </div>
@@ -22,8 +22,3 @@
   </div>
 </div>
 
-
-<!-- If Not LoggedIn -->
-<div *ngIf="!hasUserLoggedIn">
-  <router-outlet></router-outlet>
-</div>

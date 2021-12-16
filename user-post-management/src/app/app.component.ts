@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { SharedService } from './shared/shared.service';
 
 @Component({
@@ -9,6 +10,6 @@ import { SharedService } from './shared/shared.service';
 export class AppComponent {
   title = 'user-post-management';
 
-  constructor() {
+  constructor(private router: Router) {
   }
 }
