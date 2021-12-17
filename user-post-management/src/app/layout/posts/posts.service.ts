@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Post } from './post.model';
 
 @Injectable({
@@ -9,8 +9,11 @@ import { Post } from './post.model';
 export class PostsService {
 
   endPointUrl: string;
+  postTitleToShow: Subject<string>;
+
   constructor(private http: HttpClient) {
     this.endPointUrl = 'https://strapi-test.promactinfo.com';
+    this.postTitleToShow = new Subject<string>();
   }
 
   /*

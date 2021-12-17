@@ -33,7 +33,7 @@
 .z-index-1 { z-index: 1; }
 .height-percent-100 { height: 100%; }
 .cursor-pointer { cursor: pointer; }
-
+.theme-color { color: $primary-color; }
 /*Toaster style*/
 .toast-container {
   .custom-toast {
@@ -95,10 +95,8 @@
     @include transition(0.2s all);
     &:last-child { border-bottom-width: 1px; }
     &:hover { color: $primary-color; cursor: pointer; background-color: rgba($light-gray, 0.1); }
-    &.is-selected { border-right-width: 0; color: $primary-color; }
-
-    .post-description {
-      @include multi-line-ellipsis(2, 18px);
+    &.is-selected { color: $primary-color;
+      .fa-comments { color: $primary-color; }
     }
 
     .fa-comments { color: rgba($black-color, 0.5); }
@@ -106,7 +104,42 @@
 }
 
 
-.post-details-container { border: 1px solid $light-gray; }
+.post-details-container { border: 1px solid $light-gray;
+  .card { box-shadow: none; }
+  .post-comments-container { border-top: 1px solid $light-gray;
+    .comment-wrapper { }
+    .individual-comment { border-bottom: 1px solid $light-gray;
+      &:last-child { border-bottom: none; }
+    }
+  }
+  .post-heading { color: $primary-color; }
+  .total-comment-count { font-weight: 500; }
+  .user-name { font-weight: 600; }
+  .add-comment-group {
+    .form-control { padding-right: 35px; }
+    .btn { right: 0; }
+  }
+  .edit-comment-group {
+    .form-control { padding-right: 70px; }
+    .btn { right: 0;
+      &.fa-check-btn { right: 25px; }
+    }
+  }
+}
+
+.btn {
+  &.btn-icon {
+    &.transperant-btn { background-color: transparent; height: 25px; width: 25px;
+      &:hover { box-shadow: none !important; /*Override the default button style*/ }
+      &:focus,
+      &:active { background-color: transparent !important; /*Override the default button style*/ }
+      .fa-edit,
+      .fa-times { color: $dark-gray !important; /*Override the default button style*/ }
+      .fa-paper-plane,
+      .fa-check { color: $primary-color !important; /*Override the default button style*/ }
+    }
+  }
+}
 
 
 .add-post-container {
@@ -115,23 +148,24 @@
   }
 }
 
-.upload-post-image-block {vertical-align: top; position: relative; cursor:pointer; height: 150px; width: 150px; border-radius: 5px; border: 1px dashed $primary-color; background-color: rgba( $primary-color, 0.1) }
-.uploaded-post-image-block {vertical-align: top; position: relative; border-radius: 5px; padding: 5px; height: 150px; width: 150px; border: 1px solid $light-gray;
+.upload-post-image-block { vertical-align: top; position: relative; cursor: pointer; height: 150px; width: 150px; border-radius: 5px; border: 1px dashed $primary-color; background-color: rgba( $primary-color, 0.1) }
+.uploaded-post-image-block { vertical-align: top; position: relative; border-radius: 5px; padding: 5px; height: 150px; width: 150px; border: 1px solid $light-gray;
   img { max-height: 100%; max-width: 100%; border-radius: inherit; }
   .btn {
     &:not(.btn-icon) {
       .now-ui-icons { top: 0 }
     }
 
-
-
     &.remove-image-icon { border-radius: 50%; height: 20px; width: 20px; padding: 0; position: absolute; top: -8px; right: -8px; }
   }
 }
+
+
 /*=====================================
    Responsive media query
 =======================================*/
-@media screen and (max-width: 576px) { /*Users list table*/ .users-list-container {
+@media screen and (max-width: 576px) { /*Users list table*/
+  .users-list-container {
     .users-list-table {
       table { max-width: 400px; width: 400px; }
     }

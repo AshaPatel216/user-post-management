@@ -12,11 +12,14 @@ export class PostDetailsComponent implements OnInit {
 
   postId: string;
   post: Post;
+  postTitleToShow: string;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private postService: PostsService,
     private sharedService: SharedService) {
+
+    this.postTitleToShow = '';
 
     this.postId = '';
     this.post = new Post();
@@ -24,24 +27,23 @@ export class PostDetailsComponent implements OnInit {
       this.postId = params['postId'];
       this.getPostDetails();
     });
-    
+
+    this.postService.postTitleToShow.subscribe(res => {
+      this.postTitleToShow = res;
+    });
   }
 
   ngOnInit(): void {
     this.sharedService.isLoaderLoading.next(true);
   }
 
+  /**
+   * Get post details
+   */
   getPostDetails(): void {
     this.postService.getPostDetails(this.postId).subscribe(res => {
-      const response: Post[] = JSON.parse(JSON.stringify(res));
-      response.forEach(post => {
-
-        if (this.postId == post.id) {
-          this.post = post;
-        }
-      })
-
-      console.log(this.post)
+      this.post = res[0];
+      console.log(this.post);
 
       this.sharedService.isLoaderLoading.next(false);
     },

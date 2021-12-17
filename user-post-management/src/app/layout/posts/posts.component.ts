@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SharedService } from '../../shared/shared.service';
 import { Post, Comment } from './post.model';
 import { PostsService } from './posts.service';
@@ -12,12 +12,19 @@ export class PostsComponent implements OnInit {
 
   posts: Post[];
   comments: Comment[];
-
+  
   constructor(private postsService: PostsService,
     private sharedService: SharedService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute) {
     this.posts = [];
     this.sharedService.isLoaderLoading.next(true);
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        console.log(route.snapshot.paramMap.get('postId'));
+      }
+    })
   }
 
 
@@ -59,6 +66,9 @@ export class PostsComponent implements OnInit {
               'media': []
             }
           );
+
+          index === 0 ? this.postsService.postTitleToShow.next(`Post ${index + 1}`) : 0;
+
         });
         this.posts.map(post => {
           if (post.isPostSelected) {
@@ -78,11 +88,19 @@ export class PostsComponent implements OnInit {
    * Make selected post as active
    * @param postId Id of the selected post
    */
-  showPostDetails(postId: string): void {
+  showPostDetails(postId: string, index: number): void {
     // change isSelected boolean
     this.posts.forEach(post => {
-      post.id === postId ? post.isPostSelected = true : post.isPostSelected = false;
+      if (post.id === postId) {
+        post.isPostSelected = true;
+        this.postsService.postTitleToShow.next(`Post ${index + 1}`);
+      }
+      else {
+        post.isPostSelected = false;
+      }
     })
+
+
   }
 
   /**
