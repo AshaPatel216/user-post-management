@@ -1,0 +1,25 @@
+<!-- Sidebar -->
+<div>
+  <!-- Sidebar header -->
+  <div class="logo">
+    <a href="#" class="simple-text logo-mini">
+      PM
+    </a>
+    <a href="#" class="simple-text logo-normal">
+      Post Manage
+    </a>
+  </div>
+
+  <!-- Sidebar menu -->
+  <div class="sidebar-wrapper" id="sidebar-wrapper">
+    <ul class="nav">
+      <li *ngFor="let menuItem of sidebarMenuItems" [ngClass]="{'active' : menuItem.isActive}" class="nav-item">
+        <a [routerLink]="menuItem.path">
+          <i class="now-ui-icons {{menuItem.icon}}"></i>
+          <p>{{menuItem.name}}</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</div>

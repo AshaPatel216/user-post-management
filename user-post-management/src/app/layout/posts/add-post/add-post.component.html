@@ -1,0 +1,73 @@
+<!-- Add New Post -->
+<section class="add-post-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <!-- Header -->
+        <div class="card-header pt-0">
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center">
+            <h4 class="card-title text-uppercase m-0 pb-2 theme-color">Add Post</h4>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="card-body">
+          <form #postCreateForm="ngForm" (ngSubmit)="postCreateForm.form.valid && createPost()">
+
+            <div>
+              <div class="row">
+                <!-- Post Description -->
+                <div class="col-12 col-sm-12">
+                  <div class="form-group">
+                    <label>Post Description</label><span class="text-danger">*</span>
+                    <textarea type="text" class="form-control" placeholder="Add Description Here" name="description" [(ngModel)]="post.description" #description="ngModel" required></textarea>
+                    <div class="error-container">
+                      <span class="text-danger" *ngIf="postCreateForm.submitted && description.errors?.required">This field is mandatory.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Upload Images -->
+
+                <div class="col-12 col-sm-12">
+                  <div class="form-group">
+                    <label>Upload Images</label>
+                    <div>
+                      <!-- Upload Image -->
+                      <div class="upload-post-image-block d-inline-block mr-3 mb-4">
+                        <div class="d-flex height-percent-100 align-items-center justify-content-center cursor-pointer">
+                          <span>Add Image</span>
+                        </div>
+                        <input type="file" id="uploadPostImage" class="cursor-pointer" accept=".png, .jpg, .jpeg" (change)="onImageSelected($event.target.files)">
+                      </div>
+
+                      <!-- Uploaded Images -->
+                      <div class="uploaded-post-image-block mr-3 mb-4 d-inline-block" *ngFor="let image of uploadedImages; let i = index">
+                        <div class="d-flex height-percent-100 align-items-center justify-content-center">
+                          <!-- uploaded image -->
+                          <img src="https://strapi-test.promactinfo.com/{{image.url}}" alt="Post Image" />
+                        </div>
+                        <!-- Remove image -->
+                        <button type="button" class="remove-image-icon btn btn-primary m-0 d-flex align-items-center justify-content-center"><i class="now-ui-icons ui-1_simple-remove"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Actions -->
+                <div class="col-12 text-right">
+                  <button type="button" class="btn btn-secondary btn-md mr-3">
+                    <span>Cancel</span>
+                  </button>
+                  <button type="submit" class="btn btn-primary btn-md">
+                    <span>Save</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

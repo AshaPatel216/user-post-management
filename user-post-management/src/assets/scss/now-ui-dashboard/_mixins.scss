@@ -1,0 +1,15 @@
+//Components
+@import "mixins/buttons";
+@import "mixins/vendor-prefixes";
+@import "mixins/inputs";
+@import "mixins/page-header";
+@import "mixins/dropdown";
+@import "mixins/sidebar";
+@import "mixins/cards";
+@import "mixins/transparency";
+
+//Custom
+
+@mixin transition($transition...) { -webkit-transition: $transition; -moz-transition: $transition; -ms-transition: $transition; -o-transition: $transition; transition: $transition; }
+
+@mixin multi-line-ellipsis($total-line,$line-height) { display: -webkit-box; -webkit-line-clamp: $total-line; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; line-height: $line-height; }
