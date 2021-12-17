@@ -19,8 +19,7 @@ export class PostDetailsComponent implements OnInit {
     private postService: PostsService,
     private sharedService: SharedService) {
 
-    this.postTitleToShow = '';
-
+    this.postTitleToShow = 'Post 1';
     this.postId = '';
     this.post = new Post();
     this.route.params.subscribe(params => {
@@ -29,8 +28,11 @@ export class PostDetailsComponent implements OnInit {
     });
 
     this.postService.postTitleToShow.subscribe(res => {
-      this.postTitleToShow = res;
+      if (res) {
+        this.postTitleToShow = res;
+      }
     });
+
   }
 
   ngOnInit(): void {
@@ -42,8 +44,13 @@ export class PostDetailsComponent implements OnInit {
    */
   getPostDetails(): void {
     this.postService.getPostDetails(this.postId).subscribe(res => {
-      this.post = res[0];
-      console.log(this.post);
+      const response: Post[] = JSON.parse(JSON.stringify(res));
+      response.forEach(post => {
+
+        if (this.postId == post.id) {
+          this.post = post;
+        }
+      })
 
       this.sharedService.isLoaderLoading.next(false);
     },

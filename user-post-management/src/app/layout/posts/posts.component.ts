@@ -12,7 +12,8 @@ export class PostsComponent implements OnInit {
 
   posts: Post[];
   comments: Comment[];
-  
+  isPostDetailsOpen: boolean;
+
   constructor(private postsService: PostsService,
     private sharedService: SharedService,
     private router: Router,
@@ -20,11 +21,8 @@ export class PostsComponent implements OnInit {
     this.posts = [];
     this.sharedService.isLoaderLoading.next(true);
 
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        console.log(route.snapshot.paramMap.get('postId'));
-      }
-    })
+    this.isPostDetailsOpen = true;
+  
   }
 
 
@@ -67,14 +65,18 @@ export class PostsComponent implements OnInit {
             }
           );
 
-          index === 0 ? this.postsService.postTitleToShow.next(`Post ${index + 1}`) : 0;
+          if (index === 0) {
+            this.postsService.postTitleToShow.next('Post 1');
+          }
 
         });
+
         this.posts.map(post => {
           if (post.isPostSelected) {
             this.router.navigate(['post', post.id]);
           }
         });
+
         this.sharedService.isLoaderLoading.next(false);
       },
       err => {
