@@ -15,15 +15,19 @@
 
           <div>
             <!-- Description -->
-            <div class="mb-3" *ngIf="true">
-              I have a ng-grid when I add a record into that the row gets inserted at the
-              bottom of the grid, I want to display the newly added row
-              in the top of my grid so that a user would be able to know which data is added.
+            <div class="mb-3">{{post.description}}</div>
+
+            <!-- Post Images -->
+            <div *ngIf="postImages.length > 0">
+              <ng-image-slider [images]="postImages"
+                               [imageSize]="{width: 400, height: 300}"
+                               [manageImageRatio]="true"
+                               [animationSpeed]="1"></ng-image-slider>
             </div>
 
             <!-- Comments -->
             <div>
-              <app-comments></app-comments>
+              <app-comments [postComments]="post.comments"></app-comments>
             </div>
           </div>
         </div>

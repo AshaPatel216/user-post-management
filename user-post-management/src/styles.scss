@@ -52,6 +52,17 @@
   .toast-title { padding-top: 5px; }
 }
 
+// ng-image slider
+.ng-image-slider {
+  .ng-image-slider-container {
+    .main {
+      .main-inner { /*width: 100% !important;*/
+        .img-div { /*width: 100% !important; */}
+      }
+    }
+  }
+}
+
 /*=====================================
     Layout main panel
 =======================================*/

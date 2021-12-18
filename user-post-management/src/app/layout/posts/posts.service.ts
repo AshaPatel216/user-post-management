@@ -43,4 +43,8 @@ export class PostsService {
     return this.http.get(`${this.endPointUrl}/posts`, postId);
   }
 
+
+  addComment(comment) {
+    return this.http.post(`${this.endPointUrl}/comments`, comment);
+  }
 }

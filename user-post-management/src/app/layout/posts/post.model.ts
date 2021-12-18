@@ -28,4 +28,6 @@ export class Comment {
   id: string;
   commentText: string;
   user: string
+  userName?: string;
+  post?: string;
 }

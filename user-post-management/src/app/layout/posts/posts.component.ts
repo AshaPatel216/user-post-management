@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SharedService } from '../../shared/shared.service';
 import { Post, Comment } from './post.model';
@@ -12,19 +12,17 @@ export class PostsComponent implements OnInit {
 
   posts: Post[];
   comments: Comment[];
-  isPostDetailsOpen: boolean;
 
   constructor(private postsService: PostsService,
     private sharedService: SharedService,
-    private router: Router,
-    private route: ActivatedRoute) {
+    private router: Router) {
     this.posts = [];
     this.sharedService.isLoaderLoading.next(true);
-
-    this.isPostDetailsOpen = true;
-  
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    
+  }
 
   ngOnInit(): void {
     this.getAllPostsList();
@@ -90,7 +88,7 @@ export class PostsComponent implements OnInit {
    * Make selected post as active
    * @param postId Id of the selected post
    */
-  showPostDetails(postId: string, index: number): void {
+  showPostDetails(postId: string, index: number): void {   
     // change isSelected boolean
     this.posts.forEach(post => {
       if (post.id === postId) {
