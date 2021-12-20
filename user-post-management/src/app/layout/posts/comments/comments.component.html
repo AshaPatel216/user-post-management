@@ -6,7 +6,7 @@
     <ng-container *ngFor="let comment of postCommentList; let i = index">
       <div class="individual-comment pb-2 pt-2" *ngIf="comment.username !== null && comment.commentText !== null">
         <div class="user-name">{{comment.userName}}</div>
-        <div class="d-flex justify-content-between mt-1">
+        <div class="d-flex justify-content-between mt-1" *ngIf="selectedCommentIndexToEdit !== i">
           <div>{{comment.commentText}}</div>
           <div>
             <!-- Edit -->
@@ -20,10 +20,10 @@
         <ng-container *ngIf="selectedCommentIndexToEdit === i">
           <form #editCommentForm="ngForm" (ngSubmit)="editCommentForm.form.valid && editComment(editCommentForm, comment.id, editCommentText, comment.user)" novalidate>
             <div class="form-group edit-comment-group mt-4 mb-0 d-flex align-items-center">
-              <input type="text" id="comment{{i}}" name="comment{{i}}" class="form-control" [(ngModel)]="editCommentText" #editComment="ngModel" placeholder="Your comment" required>
+              <input type="text" id="comment{{i}}" name="comment{{i}}" class="form-control" [(ngModel)]="editCommentText" placeholder="Your comment" required>
 
               <!-- Edit -->
-              <button type="submit" rel="tooltip" class="position-absolute btn btn-primary fa-check-btn m-0 btn-icon transperant-btn mr-2">
+              <button type="submit" rel="tooltip" class="position-absolute btn btn-primary fa-check-btn m-0 btn-icon transperant-btn mr-2" [disabled]="editCommentText === ''">
                 <i class="fas fa-check"></i>
               </button>
 
@@ -34,7 +34,7 @@
             </div>
 
             <div class="error-container">
-              <span class="text-danger" *ngIf="editCommentForm.submitted && editComment.errors?.required">This field is mandatory.</span>
+              <span class="text-danger" *ngIf="editCommentText === ''">This field is mandatory.</span>
             </div>
           </form>
         </ng-container>
