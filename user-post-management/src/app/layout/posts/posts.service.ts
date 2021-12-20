@@ -39,12 +39,27 @@ export class PostsService {
     return this.http.post(`${this.endPointUrl}/posts`, post)
   }
 
+  /**
+   * Get post details for specific post
+   * @param postId If of the Post
+   */
   getPostDetails(postId) {
     return this.http.get(`${this.endPointUrl}/posts`, postId);
   }
 
-
+  /**
+   * Add comment
+   * @param comment Object of the comment
+   */
   addComment(comment) {
     return this.http.post(`${this.endPointUrl}/comments`, comment);
+  }
+
+  /**
+   * edit the comment
+   * @param commentId Id of the comment to be edited
+   */
+  editComment(commentId, updatedComment) {
+    return this.http.put(`${this.endPointUrl}/comments/${commentId}`, updatedComment);
   }
 }

@@ -20,6 +20,9 @@ export class CommentsComponent implements OnInit {
   postCommentList: Comment[];
   totalCommentsCount: number;
   newComment: Comment;
+  selectedCommentIndexToEdit: number;
+  editCommentText: string;
+  updatedComment: Comment;
 
   constructor(private userService: UsersService,
     private sharedService: SharedService,
@@ -29,12 +32,14 @@ export class CommentsComponent implements OnInit {
     this.totalCommentsCount = 0;
     this.sharedService.isLoaderLoading.next(true);
     this.newComment = new Comment();
+    this.selectedCommentIndexToEdit = -1;
+    this.editCommentText = '';
 
     this.route.params.subscribe(params => {
-      console.log(params['postId'])
       this.postId = params['postId'];
     });
 
+    this.updatedComment = new Comment();
     console.log(this.postId);
   }
 
@@ -98,6 +103,9 @@ export class CommentsComponent implements OnInit {
     this.sharedService.isLoaderLoading.next(false);
   }
 
+  /**
+   * Update post list and comments to view latest records
+   */
   updatePostList(): void {
     this.postCommentList = [];
     this.postService.getPostDetails(this.postId).subscribe(res => {
@@ -115,6 +123,44 @@ export class CommentsComponent implements OnInit {
           });
         }
       })
-    });
+      this.getUserDetailsForComment();
+    },
+      err => { this.errorResponse(); });
+   
+  }
+
+  /**
+   * Open input box to edit the specific comment
+   * @param index Index of the selected comment to edit
+   * @param selectedCommentText Ols comment text
+   */
+  openEditCommentInput(index: number, selectedCommentText: string): void {
+    this.editCommentText = selectedCommentText;
+    this.selectedCommentIndexToEdit = index;
+  }
+
+  /**
+   * Edit the comment
+   * @param editCommentForm Form to be reset
+   * @param commentId Id of the comment
+   * @param commentText Comment text
+   * @param user User by whom post will be edited
+   */
+  editComment(editCommentForm: NgForm, commentId: string, commentText: string, user: string): void {
+
+    this.updatedComment = new Comment();
+    this.updatedComment.id = commentId;
+    this.updatedComment.commentText = commentText;
+    this.updatedComment.user = user;
+
+    this.postService.editComment(commentId, this.updatedComment).subscribe(res => {
+      this.sharedService.successResponse('Comment updated successfully.');
+      this.updatePostList();
+    },
+      err => { this.errorResponse(); });
+
+    this.selectedCommentIndexToEdit = -1;
+    editCommentForm.resetForm();
+   
   }
 }
