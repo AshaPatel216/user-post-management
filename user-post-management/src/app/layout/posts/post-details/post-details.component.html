@@ -20,7 +20,7 @@
             <!-- Post Images -->
             <div *ngIf="postImages.length > 0">
               <ng-image-slider [images]="postImages"
-                               [imageSize]="{width: 400, height: 300}"
+                               [imageSize]="{width: '49%', space: 4}"
                                [manageImageRatio]="true"
                                [animationSpeed]="1"></ng-image-slider>
             </div>

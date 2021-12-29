@@ -12,17 +12,38 @@ export class PostsComponent implements OnInit {
 
   posts: Post[];
   comments: Comment[];
+  currentRouteId: string;
+  tempPostId: string;
 
   constructor(private postsService: PostsService,
     private sharedService: SharedService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute) {
     this.posts = [];
     this.sharedService.isLoaderLoading.next(true);
+
+    this.currentRouteId = '';
+    this.tempPostId = '';
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.urlAfterRedirects !== '/post') {
+          this.currentRouteId = event.url.substring(event.url.indexOf('/post') + 6);
+        }
+      }
+    });
+
+    this.postsService.posts.subscribe(res => {
+      if (res) {
+        this.posts = res;
+        this.posts.forEach(post => {
+          post.totalComment = post.comments.length;
+        })
+        this.getSelectedPostDetails();
+      }
+    })
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    
-  }
 
   ngOnInit(): void {
     this.getAllPostsList();
@@ -39,7 +60,7 @@ export class PostsComponent implements OnInit {
   getAllPostsList(): void {
     this.postsService.getAllPosts().subscribe(
       res => {
-        res.forEach((post, index) => {
+        res.forEach((post) => {
           this.comments = [];
           if (post.comments.length > 0 || post.comments !== null) {
             post.comments.forEach(comment => {
@@ -58,22 +79,13 @@ export class PostsComponent implements OnInit {
               'description': post.description,
               'comments': this.comments,
               'totalComment': this.comments.length,
-              'isPostSelected': index === 0 ? true : false,
+              'isPostSelected': false,
               'media': []
             }
           );
-
-          if (index === 0) {
-            this.postsService.postTitleToShow.next('Post 1');
-          }
-
         });
 
-        this.posts.map(post => {
-          if (post.isPostSelected) {
-            this.router.navigate(['post', post.id]);
-          }
-        });
+        this.getSelectedPostDetails();
 
         this.sharedService.isLoaderLoading.next(false);
       },
@@ -85,10 +97,41 @@ export class PostsComponent implements OnInit {
   }
 
   /**
+   * Make post name active in left side list when first time page loaded or page reloaded.
+   */
+  getSelectedPostDetails(): void {
+
+    // redirect to the first post id when routing is '/post'
+    if (this.currentRouteId === '') {
+      this.posts[0].isPostSelected = true;
+
+      this.posts.map((post) => {
+        if (post.isPostSelected) {
+          this.router.navigate(['post', post.id]);
+        }
+      });
+    }
+
+    else {
+      this.router.navigate(['post', this.currentRouteId]);
+      this.posts.forEach((post, index) => {
+        this.tempPostId = post.id;
+        if (this.tempPostId == this.currentRouteId) {
+          post.isPostSelected = true;
+          this.postsService.postTitleToShow.next(`Post ${index + 1}`);
+        }
+        else {
+          post.isPostSelected = false;
+        }
+      });
+    }
+  }
+
+  /**
    * Make selected post as active
    * @param postId Id of the selected post
    */
-  showPostDetails(postId: string, index: number): void {   
+  showPostDetails(postId: string, index: number): void {
     // change isSelected boolean
     this.posts.forEach(post => {
       if (post.id === postId) {

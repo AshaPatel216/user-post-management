@@ -40,7 +40,6 @@ export class CommentsComponent implements OnInit {
     });
 
     this.updatedComment = new Comment();
-    console.log(this.postId);
   }
 
   /**
@@ -56,11 +55,7 @@ export class CommentsComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-  
-     
-    
-  }
+  ngOnInit(): void {}
 
   /**
    * Get user name for the comments created by user
@@ -122,8 +117,10 @@ export class CommentsComponent implements OnInit {
             });
           });
         }
+       
       })
       this.getUserDetailsForComment();
+      this.postService.posts.next(response);
     },
       err => { this.errorResponse(); });
    
@@ -161,6 +158,6 @@ export class CommentsComponent implements OnInit {
 
     this.selectedCommentIndexToEdit = -1;
     editCommentForm.resetForm();
-   
+    this.updatePostList();
   }
 }

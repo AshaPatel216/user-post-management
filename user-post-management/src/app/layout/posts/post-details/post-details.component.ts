@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SharedService } from '../../../shared/shared.service';
 import { Comment, Post } from '../post.model';
@@ -26,7 +26,6 @@ export class PostDetailsComponent implements OnInit {
     this.postId = '';
     this.postComments = [];
     this.post = new Post();
-
     this.route.params.subscribe(params => {
       this.postId = params['postId'];
       this.getPostDetails();
@@ -39,12 +38,15 @@ export class PostDetailsComponent implements OnInit {
     });
 
     this.postImages = [];
+
   }
 
   ngOnInit(): void {
+    
     this.sharedService.isLoaderLoading.next(true);
   }
 
+  
   /**
    * Get post details
    */

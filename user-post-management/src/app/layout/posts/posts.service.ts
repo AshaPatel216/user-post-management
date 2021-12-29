@@ -10,10 +10,12 @@ export class PostsService {
 
   endPointUrl: string;
   postTitleToShow: Subject<string>;
+  posts: Subject<Post[]>;
 
   constructor(private http: HttpClient) {
     this.endPointUrl = 'https://strapi-test.promactinfo.com';
     this.postTitleToShow = new Subject<string>();
+    this.posts = new Subject<Post[]>();
   }
 
   /*
