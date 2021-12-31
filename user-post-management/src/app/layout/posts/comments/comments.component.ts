@@ -160,4 +160,16 @@ export class CommentsComponent implements OnInit {
     editCommentForm.resetForm();
     this.updatePostList();
   }
+
+  /**
+   * Delete comment
+   * @param comment Comment to be deleted
+   */
+  deleteComment(comment: Comment): void {
+    this.postService.deleteComment(comment.id).subscribe(res => {
+      this.sharedService.successResponse('Comment deleted successfully.');
+      this.updatePostList();
+    },
+      err => { this.errorResponse(); });
+  }
 }

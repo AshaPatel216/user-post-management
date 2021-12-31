@@ -148,7 +148,9 @@
       .fa-edit,
       .fa-times { color: $dark-gray !important; /*Override the default button style*/ }
       .fa-paper-plane,
-      .fa-check { color: $primary-color !important; /*Override the default button style*/ }
+      .fa-check,
+      .fa-trash { color: $primary-color !important; /*Override the default button style*/ }
+      .fa-trash { font-size: $font-size-large !important; /*Override the default button style*/ }
     }
   }
 }

@@ -64,4 +64,12 @@ export class PostsService {
   editComment(commentId, updatedComment) {
     return this.http.put(`${this.endPointUrl}/comments/${commentId}`, updatedComment);
   }
+
+  /**
+   * delete the comment
+   * @param commentId Id of the comment to be deleted
+   */
+  deleteComment(commentId) {
+    return this.http.delete(`${this.endPointUrl}/comments/${commentId}`);
+  }
 }
