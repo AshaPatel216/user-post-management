@@ -22,7 +22,7 @@ export class PostsService {
    * Get All Posts
    */
   getAllPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.endPointUrl}/posts`);
+    return this.http.get<Post[]>(`${this.endPointUrl}/posts?_limit=-1`);
   }
 
   /**
@@ -46,7 +46,7 @@ export class PostsService {
    * @param postId If of the Post
    */
   getPostDetails(postId) {
-    return this.http.get(`${this.endPointUrl}/posts`, postId);
+    return this.http.get(`${this.endPointUrl}/posts?_limit=-1`, postId);
   }
 
   /**
