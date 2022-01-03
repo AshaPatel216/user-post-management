@@ -58,4 +58,5 @@ export class UsersService {
   editUserDetails(userId: String, user: User) {
     return this.http.put(`${this.endPointUrl}/users/${userId}`, user);
   }
+
 }

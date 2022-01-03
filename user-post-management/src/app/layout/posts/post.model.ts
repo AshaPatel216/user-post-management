@@ -1,3 +1,5 @@
+import { User } from '../users/user.model';
+
 export class Post {
   id: string;
   description: string;
@@ -5,6 +7,7 @@ export class Post {
   isPostSelected?: boolean;
   comments: Comment[];
   media: Media[];
+  user?: string;
 }
 
 

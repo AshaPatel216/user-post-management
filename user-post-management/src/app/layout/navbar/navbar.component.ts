@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TokenStorageService } from '../../core/token-storage.service';
 import { SharedService } from '../../shared/shared.service';
 
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html'
@@ -14,6 +15,7 @@ export class NavbarComponent implements OnInit{
   isHeaderRightMenuExpanded: boolean;
   headerLable: string;
   isUsersPageOpen: boolean;
+ 
 
   constructor(private sharedService: SharedService,
     private tokenStorageService: TokenStorageService,
@@ -56,5 +58,8 @@ export class NavbarComponent implements OnInit{
     this.sharedService.isLoaderLoading.next(false);
     this.sharedService.isUserLoggedIn.next(false);
     this.router.navigateByUrl('login');
+  }
+
+  getMyPosts(): void {
   }
 }

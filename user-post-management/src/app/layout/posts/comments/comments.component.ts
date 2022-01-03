@@ -49,7 +49,6 @@ export class CommentsComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.postComments && changes.postComments.currentValue) {
       this.postCommentList = changes.postComments.currentValue;
-      console.log(this.postCommentList);
       this.totalCommentsCount = this.postCommentList.length;
       this.getUserDetailsForComment();
     }

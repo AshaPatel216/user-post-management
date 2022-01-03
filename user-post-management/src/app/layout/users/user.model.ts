@@ -1,3 +1,5 @@
+import { Post } from '../posts/post.model';
+
 export class User {
   id?: string;
   username: string;
@@ -8,7 +10,7 @@ export class User {
   confirmed?: boolean;
   blocked?: boolean;
   role?: string;
-  posts: [string];
+  posts: Post[];
   comments?: [string];
   created_by?: string;
   updated_by?: string

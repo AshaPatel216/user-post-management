@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { TokenStorageService } from '../../../core/token-storage.service';
 import { SharedService } from '../../../shared/shared.service';
+import { UsersService } from '../../users/users.service';
 import { Comment, Media, Post } from '../post.model';
 import { PostsService } from '../posts.service';
 
@@ -22,7 +23,8 @@ export class AddPostComponent implements OnInit {
 
   constructor(private postService: PostsService,
     private sharedService: SharedService,
-    private router: Router) {
+    private router: Router,
+    private tokenStorageService: TokenStorageService) {
     this.imageFileName = '';
     this.uploadedImages = [];
     this.post = new Post();
@@ -74,11 +76,15 @@ export class AddPostComponent implements OnInit {
     )
   }
 
+  /**
+   * Create Post
+   */
   createPost(): void {
     this.sharedService.isLoaderLoading.next(true);
     this.post.media = [];
     this.post.comments = [];
-   
+    this.post.user = this.tokenStorageService.loggedInUserId;
+
     this.uploadedImages.forEach(
       image => {
         this.post.media.push(
@@ -106,41 +112,44 @@ export class AddPostComponent implements OnInit {
     
   }
 
+  /**
+   * Update Post list after creation
+   */
   updatePostList(): void {
     this.posts == [];
 
     this.postService.getAllPosts().subscribe(res => {
-      console.log(res.length)
-      res.forEach((post, index) => {
-        this.allPostComments = [];
-        if (post.comments.length > 0 || post.comments !== null) {
-          post.comments.forEach(comment => {
-            this.allPostComments.push(
-              {
-                'id': comment.id,
-                'commentText': comment.commentText,
-                'user': comment.user
-              }
-            );
-          });
-        }
-        this.posts.push(
-          {
-            'id': post.id,
-            'description': post.description,
-            'comments': this.allPostComments,
-            'totalComment': this.allPostComments.length,
-            'isPostSelected': index === 0 ? true : false,
-            'media': []
+        console.log(res.length)
+        res.forEach((post, index) => {
+          this.allPostComments = [];
+          if (post.comments.length > 0 || post.comments !== null) {
+            post.comments.forEach(comment => {
+              this.allPostComments.push(
+                {
+                  'id': comment.id,
+                  'commentText': comment.commentText,
+                  'user': comment.user
+                }
+              );
+            });
           }
-        );
-      });
-      this.postService.posts.next([]);
-      this.postService.posts.next(this.posts);
-    },
-      err => {
-        this.sharedService.errorResponse();
-        this.sharedService.isLoaderLoading.next(false);
-      })
-  }
+          this.posts.push(
+            {
+              'id': post.id,
+              'description': post.description,
+              'comments': this.allPostComments,
+              'totalComment': this.allPostComments.length,
+              'isPostSelected': index === 0 ? true : false,
+              'media': []
+            }
+          );
+        });
+        this.postService.posts.next([]);
+        this.postService.posts.next(this.posts);
+      },
+        err => {
+          this.sharedService.errorResponse();
+          this.sharedService.isLoaderLoading.next(false);
+        })
+    }
 }
