@@ -3,6 +3,7 @@ import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../../core/token-storage.service';
 import { SharedService } from '../../shared/shared.service';
+import { PostsService } from '../posts/posts.service';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class NavbarComponent implements OnInit{
 
   constructor(private sharedService: SharedService,
     private tokenStorageService: TokenStorageService,
-    private router: Router) {
+    private router: Router,
+    private postService: PostsService) {
     this.isHeaderRightMenuExpanded = true;
     this.headerLable = '';
 
@@ -61,5 +63,7 @@ export class NavbarComponent implements OnInit{
   }
 
   getMyPosts(): void {
+    this.postService.isMyPostsVisible.next(true);
+    //this.router.navigate(['post']);
   }
 }

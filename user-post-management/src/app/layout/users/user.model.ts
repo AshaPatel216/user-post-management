@@ -1,4 +1,4 @@
-import { Post } from '../posts/post.model';
+import { Comment, Post } from '../posts/post.model';
 
 export class User {
   id?: string;
@@ -11,7 +11,7 @@ export class User {
   blocked?: boolean;
   role?: string;
   posts: Post[];
-  comments?: [string];
+  comments?: Comment[];
   created_by?: string;
   updated_by?: string
 

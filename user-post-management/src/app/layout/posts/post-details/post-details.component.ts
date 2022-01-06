@@ -69,7 +69,7 @@ export class PostDetailsComponent implements OnInit {
           thumbImage: `https://strapi-test.promactinfo.com/${image.url}`,
         });
       });
-
+      console.log(res)
     //  this.sharedService.isLoaderLoading.next(false);
     },
       err => {

@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { TokenStorageService } from '../../../core/token-storage.service';
 import { SharedService } from '../../../shared/shared.service';
+import { User } from '../../users/user.model';
 import { UsersService } from '../../users/users.service';
-import { Comment, Media, Post } from '../post.model';
+import { AddPost, Comment, Media, Post } from '../post.model';
 import { PostsService } from '../posts.service';
 
 @Component({
@@ -17,19 +18,22 @@ export class AddPostComponent implements OnInit {
   imageFileName: string;
 
   uploadedImages: Media[];
-  post: Post;
+  post: AddPost;
   posts: Post[];
   allPostComments: Comment[];
+  postUserDetails: User;
 
   constructor(private postService: PostsService,
     private sharedService: SharedService,
     private router: Router,
+    private userService: UsersService,
     private tokenStorageService: TokenStorageService) {
     this.imageFileName = '';
     this.uploadedImages = [];
-    this.post = new Post();
+    this.post = new AddPost();
     this.posts = [];
     this.allPostComments = [];
+    this.postUserDetails = new User();
   }
 
   ngOnInit(): void {
@@ -117,39 +121,44 @@ export class AddPostComponent implements OnInit {
    */
   updatePostList(): void {
     this.posts == [];
+    this.postService.posts.next([]);
+    //this.postService.getAllPosts().subscribe(res => {
+    //    res.forEach((post, index) => {
+    //      this.allPostComments = [];
+    //      if (post.comments.length > 0 || post.comments !== null) {
+    //        post.comments.forEach(comment => {
+    //          this.allPostComments.push(
+    //            {
+    //              'id': comment.id,
+    //              'commentText': comment.commentText,
+    //              'user': comment.user
+    //            }
+    //          );
+    //        });
+    //      }
 
-    this.postService.getAllPosts().subscribe(res => {
-        console.log(res.length)
-        res.forEach((post, index) => {
-          this.allPostComments = [];
-          if (post.comments.length > 0 || post.comments !== null) {
-            post.comments.forEach(comment => {
-              this.allPostComments.push(
-                {
-                  'id': comment.id,
-                  'commentText': comment.commentText,
-                  'user': comment.user
-                }
-              );
-            });
-          }
-          this.posts.push(
-            {
-              'id': post.id,
-              'description': post.description,
-              'comments': this.allPostComments,
-              'totalComment': this.allPostComments.length,
-              'isPostSelected': index === 0 ? true : false,
-              'media': []
-            }
-          );
-        });
-        this.postService.posts.next([]);
-        this.postService.posts.next(this.posts);
-      },
-        err => {
-          this.sharedService.errorResponse();
-          this.sharedService.isLoaderLoading.next(false);
-        })
+    //      this.postUserDetails = new User();
+
+    //      this.postUserDetails = post.user;
+
+    //      this.posts.push(
+    //        {
+    //          'id': post.id,
+    //          'description': post.description,
+    //          'comments': this.allPostComments,
+    //          'totalComment': this.allPostComments.length,
+    //          'isPostSelected': index === 0 ? true : false,
+    //          'media': [],
+    //          'user': this.postUserDetails
+    //        }
+    //      );
+    //    });
+    //    this.postService.posts.next([]);
+    //    this.postService.posts.next(this.posts);
+    //  },
+    //    err => {
+    //      this.sharedService.errorResponse();
+    //      this.sharedService.isLoaderLoading.next(false);
+    //    })
     }
 }

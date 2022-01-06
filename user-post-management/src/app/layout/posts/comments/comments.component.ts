@@ -23,6 +23,8 @@ export class CommentsComponent implements OnInit {
   selectedCommentIndexToEdit: number;
   editCommentText: string;
   updatedComment: Comment;
+  isMyPostVisible: boolean;
+  updatedMyPost: Post[];
 
   constructor(private userService: UsersService,
     private sharedService: SharedService,
@@ -34,12 +36,19 @@ export class CommentsComponent implements OnInit {
     this.newComment = new Comment();
     this.selectedCommentIndexToEdit = -1;
     this.editCommentText = '';
-
+    this.updatedMyPost = [];
     this.route.params.subscribe(params => {
       this.postId = params['postId'];
     });
 
     this.updatedComment = new Comment();
+
+    this.postService.isMyPostsVisible.subscribe(res => {
+      this.isMyPostVisible = res;
+      if (res) {
+        alert("My Posts")
+      }
+    });
   }
 
   /**
@@ -83,7 +92,6 @@ export class CommentsComponent implements OnInit {
     this.postService.addComment(this.newComment).subscribe(res => {
       this.sharedService.successResponse('Comment added successfully.');
       addCommentForm.resetForm();
-
       this.updatePostList();
     },
       err => { this.errorResponse(); });
@@ -102,6 +110,7 @@ export class CommentsComponent implements OnInit {
    */
   updatePostList(): void {
     this.postCommentList = [];
+
     this.postService.getPostDetails(this.postId).subscribe(res => {
       // ArrayBuffer to JSON
       const response: Post[] = JSON.parse(JSON.stringify(res));
@@ -116,13 +125,13 @@ export class CommentsComponent implements OnInit {
             });
           });
         }
-       
+
       })
       this.getUserDetailsForComment();
-      this.postService.posts.next(response);
+      this.totalCommentsCount = this.postCommentList.length;
+      this.postService.posts.next([]);
     },
       err => { this.errorResponse(); });
-   
   }
 
   /**
