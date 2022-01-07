@@ -1,9 +1,7 @@
-import { Component, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { TokenStorageService } from '../../core/token-storage.service';
 import { SharedService } from '../../shared/shared.service';
-import { User } from '../users/user.model';
-import { UsersService } from '../users/users.service';
 import { Post, Comment } from './post.model';
 import { PostsService } from './posts.service';
 
@@ -30,16 +28,10 @@ export class PostsComponent implements OnInit, OnDestroy {
 
     this.currentRouteId = '';
     this.tempPostId = '';
-    this.isMyPostVisible = false;
+
     this.tempPostList = [];
 
-    // get my posts
-    this.postsService.isMyPostsVisible.subscribe(res => {
-      this.isMyPostVisible = res;
-      if (res) {
-        this.getMyPosts();
-      }
-    });
+    this.isMyPostVisible = false;
 
     // fetch id from the current route and make a post as selected
     this.router.events.subscribe(event => {
@@ -55,6 +47,15 @@ export class PostsComponent implements OnInit, OnDestroy {
       }
     });
 
+    // get my posts
+    this.postsService.isMyPostsVisible.subscribe(res => {
+      this.isMyPostVisible = res;
+      if (res) {
+        this.getMyPosts();
+      }
+    });
+
+
     // update post list when edit delete operation perform
     this.postsService.posts.subscribe(res => {
       if (res) {   
@@ -66,7 +67,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllPostsList();
-    this.sharedService.headerLable.next('posts');
+    this.sharedService.headerLable.next('posts'); 
   }
 
   ngOnDestroy(): void {
@@ -110,7 +111,6 @@ export class PostsComponent implements OnInit, OnDestroy {
         });
 
         this.getSelectedPostDetails();
-
         if (this.isMyPostVisible) {
           this.getMyPosts();
         }

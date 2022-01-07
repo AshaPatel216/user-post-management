@@ -50,7 +50,7 @@ export class CommentsComponent implements OnInit {
 
   /**
    * Call on data change
-   * @param changes detect the old to new value changes for comments
+   * @param changes detect the old to new value changes for comments when select another post
    */
   ngOnChanges(changes: SimpleChanges) {
     if (changes.postComments && changes.postComments.currentValue) {

@@ -62,8 +62,13 @@ export class NavbarComponent implements OnInit{
     this.router.navigateByUrl('login');
   }
 
+  /**
+   * Get loggedIn user posts
+   */
   getMyPosts(): void {
-    this.postService.isMyPostsVisible.next(true);
-    //this.router.navigate(['post']);
+    this.router.navigate(['post']);
+    window.setTimeout(x => {
+      this.postService.isMyPostsVisible.next(true);
+    }, 500)
   }
 }
