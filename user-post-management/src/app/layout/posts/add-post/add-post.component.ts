@@ -1,7 +1,5 @@
-import { HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
 import { TokenStorageService } from '../../../core/token-storage.service';
 import { SharedService } from '../../../shared/shared.service';
 import { User } from '../../users/user.model';
@@ -13,7 +11,7 @@ import { PostsService } from '../posts.service';
   selector: 'app-add-post',
   templateUrl: './add-post.component.html'
 })
-export class AddPostComponent implements OnInit {
+export class AddPostComponent {
 
   imageFileName: string;
 
@@ -26,7 +24,6 @@ export class AddPostComponent implements OnInit {
   constructor(private postService: PostsService,
     private sharedService: SharedService,
     private router: Router,
-    private userService: UsersService,
     private tokenStorageService: TokenStorageService) {
     this.imageFileName = '';
     this.uploadedImages = [];
@@ -34,9 +31,6 @@ export class AddPostComponent implements OnInit {
     this.posts = [];
     this.allPostComments = [];
     this.postUserDetails = new User();
-  }
-
-  ngOnInit(): void {
   }
 
   /**
@@ -70,7 +64,11 @@ export class AddPostComponent implements OnInit {
     }
   }
 
-  showUploadedImages(res: Media) {
+  /**
+   * Show uploaded images for post
+   * @param res Image response
+   */
+  showUploadedImages(res: Media): void {
     this.uploadedImages.push(
       {
         'id': res[0].id,
@@ -113,52 +111,14 @@ export class AddPostComponent implements OnInit {
         this.sharedService.isLoaderLoading.next(false);
       }
     );
-    
+
   }
 
   /**
    * Update Post list after creation
    */
   updatePostList(): void {
-    this.posts == [];
+    this.posts = [];
     this.postService.posts.next([]);
-    //this.postService.getAllPosts().subscribe(res => {
-    //    res.forEach((post, index) => {
-    //      this.allPostComments = [];
-    //      if (post.comments.length > 0 || post.comments !== null) {
-    //        post.comments.forEach(comment => {
-    //          this.allPostComments.push(
-    //            {
-    //              'id': comment.id,
-    //              'commentText': comment.commentText,
-    //              'user': comment.user
-    //            }
-    //          );
-    //        });
-    //      }
-
-    //      this.postUserDetails = new User();
-
-    //      this.postUserDetails = post.user;
-
-    //      this.posts.push(
-    //        {
-    //          'id': post.id,
-    //          'description': post.description,
-    //          'comments': this.allPostComments,
-    //          'totalComment': this.allPostComments.length,
-    //          'isPostSelected': index === 0 ? true : false,
-    //          'media': [],
-    //          'user': this.postUserDetails
-    //        }
-    //      );
-    //    });
-    //    this.postService.posts.next([]);
-    //    this.postService.posts.next(this.posts);
-    //  },
-    //    err => {
-    //      this.sharedService.errorResponse();
-    //      this.sharedService.isLoaderLoading.next(false);
-    //    })
-    }
+  }
 }

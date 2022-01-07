@@ -1,5 +1,5 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../../../shared/shared.service';
 import { Comment, Post } from '../post.model';
 import { PostsService } from '../posts.service';
@@ -16,8 +16,7 @@ export class PostDetailsComponent implements OnInit {
   postImages: Array<Object>;
   postComments: Comment[];
 
-  constructor(private router: Router,
-    private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private postService: PostsService,
     private sharedService: SharedService) {
 
@@ -26,6 +25,7 @@ export class PostDetailsComponent implements OnInit {
     this.postId = '';
     this.postComments = [];
     this.post = new Post();
+
     this.route.params.subscribe(params => {
       this.postId = params['postId'];
       this.getPostDetails();
@@ -41,12 +41,10 @@ export class PostDetailsComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {  
     this.sharedService.isLoaderLoading.next(true);
   }
-
-  
+ 
   /**
    * Get post details
    */
@@ -69,8 +67,6 @@ export class PostDetailsComponent implements OnInit {
           thumbImage: `https://strapi-test.promactinfo.com/${image.url}`,
         });
       });
-      console.log(res)
-    //  this.sharedService.isLoaderLoading.next(false);
     },
       err => {
         this.sharedService.errorResponse();

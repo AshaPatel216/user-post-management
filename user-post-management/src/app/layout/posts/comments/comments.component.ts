@@ -137,7 +137,7 @@ export class CommentsComponent implements OnInit {
   /**
    * Open input box to edit the specific comment
    * @param index Index of the selected comment to edit
-   * @param selectedCommentText Ols comment text
+   * @param selectedCommentText Old comment text
    */
   openEditCommentInput(index: number, selectedCommentText: string): void {
     this.editCommentText = selectedCommentText;

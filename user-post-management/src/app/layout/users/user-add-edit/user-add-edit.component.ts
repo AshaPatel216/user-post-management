@@ -1,7 +1,5 @@
-import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { TokenStorageService } from '../../../core/token-storage.service';
 import { SharedService } from '../../../shared/shared.service';
 import { User } from '../user.model';
@@ -11,7 +9,7 @@ import { UsersService } from '../users.service';
   selector: 'app-user-add-edit',
   templateUrl: './user-add-edit.component.html'
 })
-export class UserAddEditComponent implements OnInit {
+export class UserAddEditComponent {
 
   isShowPasswordChecked: boolean;
   isShowConfirmPasswordChecked: boolean;
@@ -52,9 +50,6 @@ export class UserAddEditComponent implements OnInit {
     if (!this.isUserAddPage) {
       this.getExistingUserData();
     }
-  }
-
-  ngOnInit(): void {
   }
 
   /**

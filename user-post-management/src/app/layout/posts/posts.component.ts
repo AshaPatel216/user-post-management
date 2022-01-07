@@ -18,54 +18,47 @@ export class PostsComponent implements OnInit, OnDestroy {
   currentRouteId: string;
   tempPostId: string;
   isMyPostVisible: boolean;
-  postUserDetails: User;
   tempPostList: Post[];
 
   constructor(private postsService: PostsService,
     private sharedService: SharedService,
     private router: Router,
-    private route: ActivatedRoute,
-    private userService: UsersService,
     private tokenStorageService: TokenStorageService) {
+
     this.posts = [];
     this.sharedService.isLoaderLoading.next(true);
 
     this.currentRouteId = '';
     this.tempPostId = '';
     this.isMyPostVisible = false;
-    this.postUserDetails = new User();
     this.tempPostList = [];
 
+    // get my posts
     this.postsService.isMyPostsVisible.subscribe(res => {
       this.isMyPostVisible = res;
       if (res) {
-        // this.posts = [];
         this.getMyPosts();
       }
     });
 
+    // fetch id from the current route and make a post as selected
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (event.urlAfterRedirects !== '/post') {
           this.currentRouteId = event.url.substring(event.url.indexOf('/post') + 6);
         }
+        this.posts.forEach(post => {
+          if (this.currentRouteId == post.id) {
+            post.isPostSelected = true;
+          }
+        })
       }
     });
 
+    // update post list when edit delete operation perform
     this.postsService.posts.subscribe(res => {
-      console.log(this.isMyPostVisible);
-      if (res) {
-        //this.posts = res;
-        //this.posts.forEach(post => {
-        //  post.totalComment = post.comments.length;
-        //})
-        //this.getSelectedPostDetails();
-
-        this.getAllPostsList();
-        // update my posts only when my posts visible
-        if (this.isMyPostVisible) {
-          this.getMyPosts();
-        }
+      if (res) {   
+        this.getAllPostsList();       
       }
     })
   }
@@ -102,10 +95,6 @@ export class PostsComponent implements OnInit, OnDestroy {
             });
           }
 
-          this.postUserDetails = new User();
-
-         // this.postUserDetails = post.user;
-
           this.posts.push(
             {
               'id': post.id,
@@ -121,6 +110,10 @@ export class PostsComponent implements OnInit, OnDestroy {
 
         this.getSelectedPostDetails();
 
+        if (this.isMyPostVisible) {
+          this.getMyPosts();
+        }
+
         this.sharedService.isLoaderLoading.next(false);
       },
       err => {
@@ -128,6 +121,7 @@ export class PostsComponent implements OnInit, OnDestroy {
         this.sharedService.errorResponse();
       }
     )
+
   }
 
   /**
@@ -177,8 +171,6 @@ export class PostsComponent implements OnInit, OnDestroy {
         post.isPostSelected = false;
       }
     })
-
-
   }
 
   /**
@@ -195,6 +187,9 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/post/add']);
   }
 
+  /**
+   * List loggedin user's Post
+   */
   getMyPosts(): void {
     this.tempPostList = this.posts;
     this.posts = [];
@@ -214,10 +209,6 @@ export class PostsComponent implements OnInit, OnDestroy {
           });
         }
 
-       // this.postUserDetails = new User();
-
-      //  this.postUserDetails = post.user;
-
         this.posts.push(
           {
             'id': post.id,
@@ -232,80 +223,22 @@ export class PostsComponent implements OnInit, OnDestroy {
       }
     })
 
-
-
+    // change route, Post label and isSelected value as per the route id
     this.posts.forEach((post, index) => {
       if (post.id == this.currentRouteId) {
+        post.isPostSelected = true;
         this.postsService.postTitleToShow.next(`Post ${index + 1}`);
         this.router.navigate(['post', post.id]);
       }
 
       else {
         if (index === 0 && post.id !== this.currentRouteId) {
-
           this.postsService.postTitleToShow.next(`Post ${index + 1}`);
           this.router.navigate(['post', post.id]);
         }
       }
-      //if (index === 0 && post.id !== this.currentRouteId) {
-      //  post.isPostSelected = true;
-      //  this.router.navigate(['post', post.id]);
-      //}
+     
     });
-
-    console.log("current route: " + this.currentRouteId)
-
-    //this.userService.getUserDetailsById(this.tokenStorageService.loggedInUserId).subscribe(res => {
-    //  console.log(res.posts.length)
-    //  res.posts.forEach((post, index) => {
-    //    this.comments = [];
-
-    //    res.comments.forEach(comment => {
-    //      if (comment.post === post.id) {
-    //        this.comments.push(
-    //          {
-    //            'id': comment.id,
-    //            'commentText': comment.commentText,
-    //            'user': comment.user
-    //          }
-    //        )
-    //      }
-    //    })
-
-    //    this.posts.push(
-    //      {
-    //        'id': post.id,
-    //        'description': post.description,
-    //        'comments': this.comments,
-    //        'totalComment': this.comments.length,
-    //        'isPostSelected': false,
-    //        'media': []
-    //      }
-    //    );
-
-    //  });
-
-    //  console.log(this.posts);
-    //  //this.posts[0].isPostSelected = true;
-
-    //  this.posts.map((post, index) => {
-    //    if (post.id == this.currentRouteId) {
-    //      post.isPostSelected = true;
-    //      this.postsService.postTitleToShow.next(`Post ${index + 1}`);
-    //    }
-    //    //if (index === 0 && post.id !== this.currentRouteId) {
-    //    //  post.isPostSelected = true;
-    //    //  this.router.navigate(['post', post.id]);
-    //    //}
-    //  });
-
-    //  this.router.navigate(['post', this.currentRouteId]);
-
-    //  // this.postsService.postTitleToShow.next(`Post 1`);
-    //  this.sharedService.isLoaderLoading.next(false);
-    //},
-    //  err => {
-    //    this.sharedService.errorResponse();
-    //  })
+   
   }
 }
