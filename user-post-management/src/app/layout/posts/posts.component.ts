@@ -39,6 +39,9 @@ export class PostsComponent implements OnInit, OnDestroy {
         if (event.urlAfterRedirects !== '/post') {
           this.currentRouteId = event.url.substring(event.url.indexOf('/post') + 6);
         }
+        if (event.urlAfterRedirects === '/post') {
+          this.getAllPostsList();
+        }
         this.posts.forEach(post => {
           if (this.currentRouteId == post.id) {
             post.isPostSelected = true;
@@ -80,9 +83,9 @@ export class PostsComponent implements OnInit, OnDestroy {
    */
   getAllPostsList(): void {
     this.sharedService.isLoaderLoading.next(true);
-    this.posts = [];
     this.postsService.getAllPosts().subscribe(
       res => {
+        this.posts = [];
         res.forEach((post) => {
           this.comments = [];
           if (post.comments.length > 0 || post.comments !== null) {
