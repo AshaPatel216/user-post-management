@@ -55,6 +55,11 @@ export class UsersService {
     return this.http.get<User>(`${this.endPointUrl}/users/${userId}`);
   }
 
+  /**
+   * Edit user details
+   * @param userId user id
+   * @param user User data to edit
+   */
   editUserDetails(userId: String, user: User) {
     return this.http.put(`${this.endPointUrl}/users/${userId}`, user);
   }

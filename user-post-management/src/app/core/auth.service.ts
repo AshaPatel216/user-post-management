@@ -15,8 +15,6 @@ const httpOptions = {
 
 export class AuthService {
 
-  authUrl: string;
-
   constructor(private http: HttpClient) {  }
 
   /**

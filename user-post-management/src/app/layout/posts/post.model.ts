@@ -8,8 +8,6 @@ export class Post {
   comments: Comment[];
   media: Media[];
   user?: User;
- 
- // user?: User ;
 }
 
 export class AddPost {
@@ -20,8 +18,6 @@ export class AddPost {
   comments: Comment[];
   media: Media[];
   user?: string;
-
-  // user?: User ;
 }
 
 export class Media {
@@ -38,7 +34,6 @@ export class Media {
   size?: 0;
   url: string;
 }
-
 
 export class Comment {
   id: string;

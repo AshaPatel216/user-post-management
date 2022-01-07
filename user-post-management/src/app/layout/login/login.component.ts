@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../core/auth.service';
 import { TokenStorageService } from '../../core/token-storage.service';
 import { SharedService } from '../../shared/shared.service';
@@ -9,7 +8,7 @@ import { SharedService } from '../../shared/shared.service';
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
 
   userEmail: string;
@@ -19,10 +18,10 @@ export class LoginComponent implements OnInit {
   isShowPasswordChecked: boolean;
 
   userData: any;
+
   constructor(private sharedService: SharedService,
     private authService: AuthService,
     private tokenStorageService: TokenStorageService,
-    private toastr: ToastrService,
     private router: Router) {
     this.userEmail = '';
     this.userPassowrd = '';
@@ -30,9 +29,6 @@ export class LoginComponent implements OnInit {
     this.isLogInFailed = false;
     this.isShowPasswordChecked = false;
     this.tokenStorageService.logout();
-  }
-
-  ngOnInit(): void {
   }
 
   /**
