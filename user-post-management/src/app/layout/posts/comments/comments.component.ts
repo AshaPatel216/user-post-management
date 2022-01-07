@@ -45,9 +45,6 @@ export class CommentsComponent implements OnInit {
 
     this.postService.isMyPostsVisible.subscribe(res => {
       this.isMyPostVisible = res;
-      if (res) {
-        alert("My Posts")
-      }
     });
   }
 
@@ -69,6 +66,8 @@ export class CommentsComponent implements OnInit {
    * Get user name for the comments created by user
    */
   getUserDetailsForComment(): void {
+    this.sharedService.isLoaderLoading.next(true);
+
     this.postCommentList.forEach(comment => {
       if (comment.user !== null) {
         this.userService.getUserDetailsById(comment.user).subscribe(
@@ -77,21 +76,23 @@ export class CommentsComponent implements OnInit {
           },
           err => {
             this.sharedService.errorResponse();
-            this.sharedService.isLoaderLoading.next(false);
           }
         );
       }
-      this.sharedService.isLoaderLoading.next(false);
     });
+    this.sharedService.isLoaderLoading.next(false);
+
   }
 
   addComment(addCommentForm: NgForm): void {
+    this.sharedService.isLoaderLoading.next(true);
     const userId = this.tokenStorageService.loggedInUserId
     this.newComment.user = userId;
     this.newComment.post = this.postId;
     this.postService.addComment(this.newComment).subscribe(res => {
       this.sharedService.successResponse('Comment added successfully.');
       addCommentForm.resetForm();
+      this.sharedService.isLoaderLoading.next(false);
       this.updatePostList();
     },
       err => { this.errorResponse(); });
@@ -127,6 +128,8 @@ export class CommentsComponent implements OnInit {
         }
 
       })
+      this.sharedService.isLoaderLoading.next(false);
+
       this.getUserDetailsForComment();
       this.totalCommentsCount = this.postCommentList.length;
       this.postService.posts.next([]);
@@ -160,6 +163,7 @@ export class CommentsComponent implements OnInit {
 
     this.postService.editComment(commentId, this.updatedComment).subscribe(res => {
       this.sharedService.successResponse('Comment updated successfully.');
+      this.sharedService.isLoaderLoading.next(true);
       this.updatePostList();
     },
       err => { this.errorResponse(); });
@@ -174,6 +178,7 @@ export class CommentsComponent implements OnInit {
    * @param comment Comment to be deleted
    */
   deleteComment(comment: Comment): void {
+    this.sharedService.isLoaderLoading.next(true);
     this.postService.deleteComment(comment.id).subscribe(res => {
       this.sharedService.successResponse('Comment deleted successfully.');
       this.updatePostList();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../../../core/token-storage.service';
 import { SharedService } from '../../../shared/shared.service';
@@ -11,7 +11,7 @@ import { PostsService } from '../posts.service';
   selector: 'app-add-post',
   templateUrl: './add-post.component.html'
 })
-export class AddPostComponent {
+export class AddPostComponent implements OnDestroy {
 
   imageFileName: string;
 
@@ -33,11 +33,16 @@ export class AddPostComponent {
     this.postUserDetails = new User();
   }
 
+  ngOnDestroy(): void {
+    this.sharedService.isLoaderLoading.next(false);
+  }
+
   /**
    * Upload Image when it is selected
    * @param files
    */
   onImageSelected(files: File[]): void {
+
     this.sharedService.isLoaderLoading.next(true);
 
     const file: File = files[0];

@@ -49,6 +49,7 @@ export class PostDetailsComponent implements OnInit {
    * Get post details
    */
   getPostDetails(): void {
+    this.sharedService.isLoaderLoading.next(true);
     this.postService.getPostDetails(this.postId).subscribe(res => {
       // ArrayBuffer to JSON
       const response: Post[] = JSON.parse(JSON.stringify(res));
@@ -67,6 +68,7 @@ export class PostDetailsComponent implements OnInit {
           thumbImage: `https://strapi-test.promactinfo.com/${image.url}`,
         });
       });
+      this.sharedService.isLoaderLoading.next(false);
     },
       err => {
         this.sharedService.errorResponse();

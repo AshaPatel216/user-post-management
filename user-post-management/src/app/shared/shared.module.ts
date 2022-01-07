@@ -24,8 +24,6 @@ import { NgImageSliderModule } from 'ng-image-slider';
     FormsModule,
     NgImageSliderModule
   ],
-  providers: [
-    SharedService
-  ]
+  providers: [  ]
 })
 export class SharedModule { }

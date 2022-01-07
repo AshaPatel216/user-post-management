@@ -78,6 +78,7 @@ export class PostsComponent implements OnInit, OnDestroy {
    * Get All Post
    */
   getAllPostsList(): void {
+    this.sharedService.isLoaderLoading.next(true);
     this.posts = [];
     this.postsService.getAllPosts().subscribe(
       res => {
@@ -239,6 +240,7 @@ export class PostsComponent implements OnInit, OnDestroy {
       }
      
     });
-   
+
+    this.sharedService.isLoaderLoading.next(false);
   }
 }
