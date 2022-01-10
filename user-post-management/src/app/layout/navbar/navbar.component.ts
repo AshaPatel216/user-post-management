@@ -3,6 +3,8 @@ import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../../core/token-storage.service';
 import { SharedService } from '../../shared/shared.service';
+import { PostsService } from '../posts/posts.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -14,10 +16,12 @@ export class NavbarComponent implements OnInit{
   isHeaderRightMenuExpanded: boolean;
   headerLable: string;
   isUsersPageOpen: boolean;
+ 
 
   constructor(private sharedService: SharedService,
     private tokenStorageService: TokenStorageService,
-    private router: Router) {
+    private router: Router,
+    private postService: PostsService) {
     this.isHeaderRightMenuExpanded = true;
     this.headerLable = '';
 
@@ -56,5 +60,15 @@ export class NavbarComponent implements OnInit{
     this.sharedService.isLoaderLoading.next(false);
     this.sharedService.isUserLoggedIn.next(false);
     this.router.navigateByUrl('login');
+  }
+
+  /**
+   * Get loggedIn user posts
+   */
+  getMyPosts(): void {
+    this.router.navigate(['post']);
+    window.setTimeout(x => {
+      this.postService.isMyPostsVisible.next(true);
+    }, 500)
   }
 }

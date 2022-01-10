@@ -1,3 +1,5 @@
+import { Comment, Post } from '../posts/post.model';
+
 export class User {
   id?: string;
   username: string;
@@ -8,8 +10,8 @@ export class User {
   confirmed?: boolean;
   blocked?: boolean;
   role?: string;
-  posts: [string];
-  comments?: [string];
+  posts: Post[];
+  comments?: Comment[];
   created_by?: string;
   updated_by?: string
 

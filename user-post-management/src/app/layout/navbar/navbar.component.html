@@ -26,17 +26,17 @@
     <div class="collapse navbar-collapse justify-content-end" id="navigation">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link">
+          <a class="nav-link" (click)="getMyPosts()">
             <i class="now-ui-icons users_single-02"></i>
-            <p class="d-lg-none d-md-block">
-              <span>Account</span>
+            <p class="d-lg-none d-md-inline-block">
+              <span>My Posts</span>
             </p>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" (click)="logout()">
             <i class="now-ui-icons media-1_button-power"></i>
-            <p class="d-lg-none d-md-block">
+            <p class="d-lg-none d-md-inline-block">
               <span>Logout</span>
             </p>
           </a>

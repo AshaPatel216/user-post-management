@@ -7,6 +7,7 @@
         <div class="card-header">
           <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center">
             <h5 class="card-title m-0 post-heading">{{postTitleToShow}}</h5>
+           
           </div>
         </div>
 
@@ -15,14 +16,19 @@
 
           <div>
             <!-- Description -->
-            <div class="mb-3" *ngIf="true">
-              I have a ng-grid when I add a record into that the row gets inserted at the
-              bottom of the grid, I want to display the newly added row
-              in the top of my grid so that a user would be able to know which data is added.
+            <div class="mb-3">{{post.description}}</div>
+
+            <!-- Post Images -->
+            <div *ngIf="postImages.length > 0">
+              <ng-image-slider [images]="postImages"
+                               [imageSize]="{width: '49%', space: 4}"
+                               [manageImageRatio]="true"
+                               [animationSpeed]="1"></ng-image-slider>
             </div>
 
+            <!-- Comments -->
             <div>
-              <app-comments></app-comments>
+              <app-comments [postComments]="post.comments"></app-comments>
             </div>
           </div>
         </div>

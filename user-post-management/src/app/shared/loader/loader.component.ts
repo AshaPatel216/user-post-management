@@ -15,6 +15,8 @@ export class LoaderComponent implements OnInit {
     this.sharedService.isLoaderLoading.subscribe(res => {
       this.isLoaderLoading = res;
     });
+
+   
   }
 
   ngOnInit(): void {

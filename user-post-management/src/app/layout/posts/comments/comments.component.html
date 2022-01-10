@@ -1,44 +1,65 @@
 <section class="post-comments-container">
-  <div class="mt-2 total-comment-count">3 Comments</div>
+  <div class="mt-3 total-comment-count">{{totalCommentsCount}} Comments</div>
 
   <!-- List of comments -->
   <div class="comment-wrapper py-2 mt-1">
-    <div class="individual-comment pb-2 pt-2" *ngFor="let comment of [1,2,3,4]">
-      <div class="user-name">
-        User 1
-      </div>
-      <div class="d-flex justify-content-between mt-1">
-        <div>Comment 1</div>
-        <div>
-          <!-- Edit -->
-          <button type="button" rel="tooltip" class="btn btn-secondary m-0 btn-icon transperant-btn">
-            <i class="fas fa-edit"></i>
-          </button>
+    <ng-container *ngFor="let comment of postCommentList; let i = index">
+      <div class="individual-comment pb-2 pt-2" *ngIf="comment.username !== null && comment.commentText !== null">
+        <div class="user-name">{{comment.userName}}</div>
+        <div class="d-flex justify-content-between mt-1 flex-lg-row flex-column" *ngIf="selectedCommentIndexToEdit !== i">
+          <div>{{comment.commentText}}</div>
+          <div class="text-right">
+            <!-- Edit -->
+            <button type="button" class="btn btn-secondary m-0 btn-icon transperant-btn" (click)="openEditCommentInput(i, comment.commentText)">
+              <i class="fas fa-edit"></i>
+            </button>
+
+            <!-- Delete -->
+            <button type="button" class="btn btn-secondary m-0 btn-sm btn-icon transperant-btn" (click)="deleteComment(comment)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <!-- Edit comment -->
-      <div class="form-group edit-comment-group mt-4 d-flex align-items-center" *ngIf="false">
-        <input type="text" name="comment" class="form-control" placeholder="Your comment" required>
-        <!-- Edit -->
-        <button type="button" rel="tooltip" class="position-absolute btn btn-primary fa-check-btn m-0 btn-icon transperant-btn mr-2">
-          <i class="fas fa-check"></i>
-        </button>
+        <!-- Edit comment -->
+        <ng-container *ngIf="selectedCommentIndexToEdit === i">
+          <form #editCommentForm="ngForm" (ngSubmit)="editCommentForm.form.valid && editComment(editCommentForm, comment.id, editCommentText, comment.user)" novalidate>
+            <div class="form-group edit-comment-group mt-4 mb-0 d-flex align-items-center">
+              <input type="text" id="comment{{i}}" name="comment{{i}}" class="form-control" [(ngModel)]="editCommentText" placeholder="Your comment" required>
 
-        <!-- Cancel Edit -->
-        <button type="button" rel="tooltip" class="position-absolute btn btn-primary m-0 btn-icon transperant-btn mr-2">
-          <i class="fas fa-times"></i>
-        </button>
+              <!-- Edit -->
+              <button type="submit" class="position-absolute btn btn-primary fa-check-btn m-0 btn-icon transperant-btn mr-2" [disabled]="editCommentText === ''">
+                <i class="fas fa-check"></i>
+              </button>
+
+              <!-- Cancel Edit -->
+              <button type="button" class="position-absolute btn btn-primary m-0 btn-icon transperant-btn mr-2" (click)="selectedCommentIndexToEdit = -1">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <div class="error-container">
+              <span class="text-danger" *ngIf="editCommentText === ''">This field is mandatory.</span>
+            </div>
+          </form>
+        </ng-container>
+
       </div>
-    </div>
+    </ng-container>
 
     <!-- Add comment -->
-    <div class="form-group add-comment-group mt-4 d-flex align-items-center">
-      <input type="text" name="comment" class="form-control" placeholder="Your comment" required>
-      <!-- Edit -->
-      <button type="button" rel="tooltip" class="position-absolute btn btn-primary m-0 btn-icon transperant-btn mr-2">
-        <i class="fas fa-paper-plane"></i>
-      </button>
-    </div>
+    <form #addCommentForm="ngForm" (ngSubmit)="addCommentForm.form.valid && addComment(addCommentForm)" novalidate>
+      <div class="form-group add-comment-group mt-4 d-flex align-items-center">
+        <input type="text" name="comment" class="form-control" [(ngModel)]="newComment.commentText" #comment="ngModel" placeholder="Your comment" required>
+        <!-- Edit -->
+        <button type="submit" class="position-absolute btn btn-primary m-0 btn-icon transperant-btn mr-2">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+
+      <div class="error-container">
+        <span class="text-danger" *ngIf="addCommentForm.submitted && comment.errors?.required">This field is mandatory.</span>
+      </div>
+    </form>
   </div>
 </section>
