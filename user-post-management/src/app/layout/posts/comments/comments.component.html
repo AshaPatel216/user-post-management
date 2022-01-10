@@ -28,12 +28,12 @@
               <input type="text" id="comment{{i}}" name="comment{{i}}" class="form-control" [(ngModel)]="editCommentText" placeholder="Your comment" required>
 
               <!-- Edit -->
-              <button type="submit" rel="tooltip" class="position-absolute btn btn-primary fa-check-btn m-0 btn-icon transperant-btn mr-2" [disabled]="editCommentText === ''">
+              <button type="submit" class="position-absolute btn btn-primary fa-check-btn m-0 btn-icon transperant-btn mr-2" [disabled]="editCommentText === ''">
                 <i class="fas fa-check"></i>
               </button>
 
               <!-- Cancel Edit -->
-              <button type="button" rel="tooltip" class="position-absolute btn btn-primary m-0 btn-icon transperant-btn mr-2" (click)="selectedCommentIndexToEdit = -1">
+              <button type="button" class="position-absolute btn btn-primary m-0 btn-icon transperant-btn mr-2" (click)="selectedCommentIndexToEdit = -1">
                 <i class="fas fa-times"></i>
               </button>
             </div>
@@ -52,7 +52,7 @@
       <div class="form-group add-comment-group mt-4 d-flex align-items-center">
         <input type="text" name="comment" class="form-control" [(ngModel)]="newComment.commentText" #comment="ngModel" placeholder="Your comment" required>
         <!-- Edit -->
-        <button type="submit" rel="tooltip" class="position-absolute btn btn-primary m-0 btn-icon transperant-btn mr-2">
+        <button type="submit" class="position-absolute btn btn-primary m-0 btn-icon transperant-btn mr-2">
           <i class="fas fa-paper-plane"></i>
         </button>
       </div>

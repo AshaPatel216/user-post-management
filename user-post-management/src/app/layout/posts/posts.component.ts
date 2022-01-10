@@ -17,6 +17,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   tempPostId: string;
   isMyPostVisible: boolean;
   tempPostList: Post[];
+  isAddPostRoute: boolean;
 
   constructor(private postsService: PostsService,
     private sharedService: SharedService,
@@ -32,6 +33,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.tempPostList = [];
 
     this.isMyPostVisible = false;
+    this.isAddPostRoute = false;
 
     // fetch id from the current route and make a post as selected
     this.router.events.subscribe(event => {
@@ -41,6 +43,14 @@ export class PostsComponent implements OnInit, OnDestroy {
         }
         if (event.urlAfterRedirects === '/post') {
           this.getAllPostsList();
+        }
+
+        if (event.urlAfterRedirects === '/post/add') {
+          this.isAddPostRoute = true;
+        }
+
+        else {
+          this.isAddPostRoute = false;
         }
         this.posts.forEach(post => {
           if (this.currentRouteId == post.id) {
@@ -245,5 +255,21 @@ export class PostsComponent implements OnInit, OnDestroy {
     });
 
     this.sharedService.isLoaderLoading.next(false);
+  }
+
+  /**
+   * Delete post 
+   * @param postId Id of the post that needs to be deleted
+   */
+  deleteMyPost(postId: string): void {
+    this.sharedService.isLoaderLoading.next(true);
+    this.postsService.deletePost(postId).subscribe(res => {
+      this.sharedService.isLoaderLoading.next(false);
+      this.sharedService.successResponse("Post deleted successfully.");
+      this.getAllPostsList();
+    }, err => {
+      this.sharedService.isLoaderLoading.next(false);
+      this.sharedService.errorResponse();
+    })
   }
 }
