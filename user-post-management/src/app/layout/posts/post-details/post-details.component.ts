@@ -50,16 +50,11 @@ export class PostDetailsComponent implements OnInit {
    */
   getPostDetails(): void {
     this.sharedService.isLoaderLoading.next(true);
-    this.postService.getPostDetails(this.postId).subscribe(res => {
+    this.postService.getPostDetails(this.postId).subscribe((res: Post) => {
       // ArrayBuffer to JSON
-      const response: Post[] = JSON.parse(JSON.stringify(res));
-      console.log("Details: " + response.length)
+      const response: Post = JSON.parse(JSON.stringify(res));
 
-      response.forEach(post => { 
-        if (this.postId == post.id) {
-          this.post = post;
-        }
-      })
+      this.post = res[0]; 
 
       // empty postImages of old post and push new post images as per the selected post.
       this.postImages = [];

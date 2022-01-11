@@ -1,5 +1,6 @@
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { PostsService } from '../posts/posts.service';
 import { SidebarMenuItem } from './sidebar-menu-item.model';
 
 @Component({
@@ -11,7 +12,8 @@ export class SidebarComponent implements OnInit, AfterContentChecked{
   sidebarMenuItems: SidebarMenuItem[];
   selectedSidebarMenuLink: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private postService: PostsService) {
     this.selectedSidebarMenuLink = '';
     this.sidebarMenuItems = [];
     this.setSidebarMenuItems();
@@ -48,5 +50,12 @@ export class SidebarComponent implements OnInit, AfterContentChecked{
         item.isActive = false;
       }
     })
+  }
+
+  /**
+   * Reset my post variable to false
+   */
+  resetVariables(): void {
+    this.postService.isMyPostsVisible.next(false);
   }
 }

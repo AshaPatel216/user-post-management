@@ -41,16 +41,12 @@ export class PostsComponent implements OnInit, OnDestroy {
         if (event.urlAfterRedirects !== '/post') {
           this.currentRouteId = event.url.substring(event.url.indexOf('/post') + 6);
         }
+        if (event.urlAfterRedirects === '/post/add') {
+          this.currentRouteId = '';
+        }
+
         if (event.urlAfterRedirects === '/post') {
           this.getAllPostsList();
-        }
-
-        if (event.urlAfterRedirects === '/post/add') {
-          this.isAddPostRoute = true;
-        }
-
-        else {
-          this.isAddPostRoute = false;
         }
         this.posts.forEach(post => {
           if (this.currentRouteId == post.id) {
@@ -96,7 +92,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.postsService.getAllPosts().subscribe(
       res => {
         this.posts = [];
-        res.forEach((post) => {
+        res.forEach((post, index) => {
           this.comments = [];
           if (post.comments.length > 0 || post.comments !== null) {
             post.comments.forEach(comment => {
@@ -124,6 +120,8 @@ export class PostsComponent implements OnInit, OnDestroy {
         });
 
         this.getSelectedPostDetails();
+
+        console.log("All Post Length: " + this.posts.length)
         if (this.isMyPostVisible) {
           this.getMyPosts();
         }
@@ -238,21 +236,27 @@ export class PostsComponent implements OnInit, OnDestroy {
     })
 
     // change route, Post label and isSelected value as per the route id
-    this.posts.forEach((post, index) => {
-      if (post.id == this.currentRouteId) {
-        post.isPostSelected = true;
-        this.postsService.postTitleToShow.next(`Post ${index + 1}`);
-        this.router.navigate(['post', post.id]);
-      }
-
-      else {
-        if (index === 0 && post.id !== this.currentRouteId) {
+    if (this.posts.length > 0) {
+      this.posts.forEach((post, index) => {
+        if (post.id == this.currentRouteId) {
+          post.isPostSelected = true;
           this.postsService.postTitleToShow.next(`Post ${index + 1}`);
           this.router.navigate(['post', post.id]);
         }
-      }
-     
-    });
+
+        else {
+          if (index === 0 && post.id !== this.currentRouteId) {
+            this.postsService.postTitleToShow.next(`Post ${index + 1}`);
+            this.router.navigate(['post', post.id]);
+          }
+        }
+
+      });
+
+    }
+
+    else { this.router.navigate(['post/add']); }
+    console.log("My Post Length: " + this.posts.length)
 
     this.sharedService.isLoaderLoading.next(false);
   }

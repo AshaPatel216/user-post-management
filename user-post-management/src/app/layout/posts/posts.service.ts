@@ -48,7 +48,7 @@ export class PostsService {
    * @param postId If of the Post
    */
   getPostDetails(postId) {
-    return this.http.get(`${this.endPointUrl}/posts?_limit=-1`, postId);
+    return this.http.get(`${this.endPointUrl}/posts?id=${postId}`);
   }
 
   /**
