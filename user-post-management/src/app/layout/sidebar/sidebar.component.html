@@ -14,7 +14,7 @@
   <div class="sidebar-wrapper" id="sidebar-wrapper">
     <ul class="nav">
       <li *ngFor="let menuItem of sidebarMenuItems" [ngClass]="{'active' : menuItem.isActive}" class="nav-item">
-        <a [routerLink]="menuItem.path">
+        <a [routerLink]="menuItem.path" (click)="resetVariables()">
           <i class="now-ui-icons {{menuItem.icon}}"></i>
           <p>{{menuItem.name}}</p>
         </a>
