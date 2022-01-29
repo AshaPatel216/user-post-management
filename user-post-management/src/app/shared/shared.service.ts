@@ -31,7 +31,7 @@ export class SharedService {
   }
 
   /**
-   * Success resposne
+   * Success resposne with specific message
    */
   successResponse(message: string): void {
     this.toastr.success('', message , {

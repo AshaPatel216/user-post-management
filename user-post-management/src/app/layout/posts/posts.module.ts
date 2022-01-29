@@ -7,8 +7,6 @@ import { AddPostComponent } from './add-post/add-post.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { CommentsComponent } from './comments/comments.component';
 
-
-
 @NgModule({
   declarations: [
     PostsComponent,

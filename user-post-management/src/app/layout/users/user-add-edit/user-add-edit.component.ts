@@ -58,12 +58,14 @@ export class UserAddEditComponent {
   addEditUser(): void {
     this.sharedService.isLoaderLoading.next(true);
 
+    // Add user
     if (this.isUserAddPage) {
 
       this.userService.addUser(this.user).subscribe(
         res => {
           this.sharedService.isLoaderLoading.next(false);
-          this.sharedService.successResponse('User created successfully.'); 
+          this.sharedService.successResponse('User created successfully.');
+          // Redirect to user list page after creating the User
           this.goToUserListPage();
         },
         err => {
@@ -72,11 +74,13 @@ export class UserAddEditComponent {
       );
     }
 
+    // Update user details
     else {
       this.userService.editUserDetails(this.userId, this.user).subscribe(
         res => {
           this.sharedService.isLoaderLoading.next(false);
-          this.sharedService.successResponse('User updated successfully.'); 
+          this.sharedService.successResponse('User updated successfully.');
+          // Redirect to user list page after updating the User details
           this.goToUserListPage();
         },
         err => {

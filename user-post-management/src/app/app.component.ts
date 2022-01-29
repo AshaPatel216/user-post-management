@@ -22,6 +22,7 @@ export class AppComponent {
 
     this.hasUserLoggedIn = false;
 
+    // Get LogeedIn user Token and details
     if (this.tokenStorageService.getToken()) {
       this.hasUserLoggedIn = true;
       this.sharedService.isUserLoggedIn.next(true);
@@ -30,17 +31,20 @@ export class AppComponent {
       this.tokenStorageService.loggedInUserId = user.id;
     }
 
+    // If user is not logged in then redirect back to login screen
     else {
       this.sharedService.isUserLoggedIn.next(false);
       this.router.navigate(['/login']);
     }
 
+    // Get information about user login
     this.sharedService.isUserLoggedIn.subscribe(res => {
       this.hasUserLoggedIn = res;
     })
 
     this.isLoaderLoading = false;
 
+    //Fetch loader value from different components and show common loader
     this.sharedService.isLoaderLoading.subscribe(res => {
       this.isLoaderLoading = res;
     });

@@ -13,6 +13,7 @@ import { PostsService } from '../posts.service';
 })
 export class CommentsComponent implements OnInit {
 
+  // get post comment from parent component
   @Input() postComments: Comment[];
 
   postId: string;
@@ -86,11 +87,14 @@ export class CommentsComponent implements OnInit {
 
   }
 
+  /**
+   * Add comment and reset the input value
+   * @param addCommentForm From values for creating new comment
+   */
   addComment(addCommentForm: NgForm): void {
     this.sharedService.isLoaderLoading.next(true);
     const userId = this.tokenStorageService.loggedInUserId
     this.newComment.user = userId;
-    console.log(this.tokenStorageService.getUser());
     this.newComment.post = this.postId;
     this.postService.addComment(this.newComment).subscribe(res => {
       this.sharedService.successResponse('Comment added successfully.');

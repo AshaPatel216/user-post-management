@@ -6,10 +6,8 @@ export class User {
   email: string;
   provider?: string;
   password: string;
-  resetPasswordToken?: string;
   confirmed?: boolean;
   blocked?: boolean;
-  role?: string;
   posts: Post[];
   comments?: Comment[];
   created_by?: string;

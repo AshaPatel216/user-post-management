@@ -7,7 +7,7 @@ import { SidebarMenuItem } from './sidebar-menu-item.model';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html'
 })
-export class SidebarComponent implements OnInit, AfterContentChecked{
+export class SidebarComponent implements AfterContentChecked{
 
   sidebarMenuItems: SidebarMenuItem[];
   selectedSidebarMenuLink: string;
@@ -16,13 +16,12 @@ export class SidebarComponent implements OnInit, AfterContentChecked{
     private postService: PostsService) {
     this.selectedSidebarMenuLink = '';
     this.sidebarMenuItems = [];
+    // Set Menu items
     this.setSidebarMenuItems();
   }
 
-  ngOnInit(): void {
-  }
-
   ngAfterContentChecked(): void {
+    // Make link active
     this.setActiveLink();
   }
 

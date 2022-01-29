@@ -28,6 +28,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Fetch all user's list
     this.getAllUserList();
   }
 

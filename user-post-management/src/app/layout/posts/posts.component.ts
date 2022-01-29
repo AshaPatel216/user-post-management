@@ -37,17 +37,23 @@ export class PostsComponent implements OnInit, OnDestroy {
 
     // fetch id from the current route and make a post as selected
     this.router.events.subscribe(event => {
+      // Used NavigationEnd to fetch the exact route and make appropriate actions as per the routes.
       if (event instanceof NavigationEnd) {
+        // if route is not 'post' then it will be '/post/:id', So fetched id from the route
         if (event.urlAfterRedirects !== '/post') {
           this.currentRouteId = event.url.substring(event.url.indexOf('/post') + 6);
         }
+        // Make current route id to empty if route is '/post/add'
         if (event.urlAfterRedirects === '/post/add') {
           this.currentRouteId = '';
         }
 
+        // if current route is '/post' then get all post list first and show first post's details
         if (event.urlAfterRedirects === '/post') {
           this.getAllPostsList();
         }
+
+        // Make post selected as per the couurent route id
         this.posts.forEach(post => {
           if (this.currentRouteId == post.id) {
             post.isPostSelected = true;
@@ -96,6 +102,8 @@ export class PostsComponent implements OnInit, OnDestroy {
           this.comments = [];
           if (post.comments.length > 0 || post.comments !== null) {
             post.comments.forEach(comment => {
+
+              // push comments for post
               this.comments.push(
                 {
                   'id': comment.id,
@@ -106,6 +114,7 @@ export class PostsComponent implements OnInit, OnDestroy {
             });
           }
 
+          // push post
           this.posts.push(
             {
               'id': post.id,
@@ -119,9 +128,10 @@ export class PostsComponent implements OnInit, OnDestroy {
           );
         });
 
+        // get post details
         this.getSelectedPostDetails();
 
-        console.log("All Post Length: " + this.posts.length)
+        // if my post visisble and page relaod is done still show my posts.
         if (this.isMyPostVisible) {
           this.getMyPosts();
         }
@@ -256,7 +266,6 @@ export class PostsComponent implements OnInit, OnDestroy {
     }
 
     else { this.router.navigate(['post/add']); }
-    console.log("My Post Length: " + this.posts.length)
 
     this.sharedService.isLoaderLoading.next(false);
   }

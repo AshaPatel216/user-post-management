@@ -23,15 +23,6 @@ export class AddPost {
 export class Media {
   id: string;
   name: string;
-  alternativeText?: string;
-  caption?: string;
-  width?: 0;
-  height?: 0;
-  formats?: {};
-  hash?: string;
-  ext?: string;
-  mime?: string;
-  size?: 0;
   url: string;
 }
 

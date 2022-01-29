@@ -38,6 +38,7 @@
                 </button>
               </div>
 
+              <!-- Error for edit comment input -->
               <div class="error-container">
                 <span class="text-danger" *ngIf="editCommentText === ''">This field is mandatory.</span>
               </div>
@@ -58,6 +59,7 @@
         </button>
       </div>
 
+      <!-- Error for add comment input -->
       <div class="error-container">
         <span class="text-danger" *ngIf="addCommentForm.submitted && comment.errors?.required">This field is mandatory.</span>
       </div>
