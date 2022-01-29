@@ -14,6 +14,7 @@ export class AppComponent {
   hasUserLoggedIn: boolean;
   currentLoggedInUser: User;
   LoggedInUserName: string;
+  isLoaderLoading: boolean;
 
   constructor(private tokenStorageService: TokenStorageService,
     private sharedService: SharedService,
@@ -37,6 +38,13 @@ export class AppComponent {
     this.sharedService.isUserLoggedIn.subscribe(res => {
       this.hasUserLoggedIn = res;
     })
+
+    this.isLoaderLoading = false;
+
+    this.sharedService.isLoaderLoading.subscribe(res => {
+      this.isLoaderLoading = res;
+    });
+
   }
 
   ngOnInit() {

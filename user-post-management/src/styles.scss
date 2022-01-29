@@ -36,6 +36,14 @@
 .cursor-pointer { cursor: pointer; }
 .theme-color { color: $primary-color; }
 
+/*Sidebar content*/
+.sidebar,
+.off-canvas-sidebar {
+  .nav {
+    p { font-size: $font-size-base; font-weight: $font-weight-semi; }
+  }
+} 
+
 /*Toaster style*/
 .toast-container {
   .custom-toast {
@@ -121,7 +129,6 @@
 .post-details-container { border: 1px solid $light-gray;
   .card { box-shadow: none; }
   .post-comments-container { border-top: 1px solid $light-gray;
-    .comment-wrapper { }
     .individual-comment { border-bottom: 1px solid $light-gray;
       &:last-child { border-bottom: none; }
     }
@@ -139,6 +146,7 @@
       &.fa-check-btn { right: 25px; }
     }
   }
+  .comment-list-container { max-height: 230px; overflow: auto; }
 }
 
 .btn {

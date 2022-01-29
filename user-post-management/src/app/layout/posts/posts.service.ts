@@ -12,12 +12,14 @@ export class PostsService {
   postTitleToShow: Subject<string>;
   posts: Subject<Post[]>;
   isMyPostsVisible: Subject<boolean>;
+  totalPostComments: Subject<number>;
 
   constructor(private http: HttpClient) {
     this.endPointUrl = 'https://strapi-test.promactinfo.com';
     this.postTitleToShow = new Subject<string>();
     this.posts = new Subject<Post[]>();
     this.isMyPostsVisible = new Subject<boolean>();
+    this.totalPostComments = new Subject<number>();
   }
 
   /*

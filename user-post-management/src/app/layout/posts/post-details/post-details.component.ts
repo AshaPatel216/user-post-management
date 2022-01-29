@@ -15,6 +15,7 @@ export class PostDetailsComponent implements OnInit {
   postTitleToShow: string;
   postImages: Array<Object>;
   postComments: Comment[];
+  totalCommentCount: number = 0;
 
   constructor(private route: ActivatedRoute,
     private postService: PostsService,
@@ -35,6 +36,10 @@ export class PostDetailsComponent implements OnInit {
       if (res) {
         this.postTitleToShow = res;
       }
+    });
+
+    this.postService.totalPostComments.subscribe(res => {
+      this.totalCommentCount = res;
     });
 
     this.postImages = [];

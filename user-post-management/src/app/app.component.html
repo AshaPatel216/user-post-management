@@ -15,7 +15,9 @@
     <div [ngClass]="{'content position-relative' : hasUserLoggedIn}">
 
       <!-- Loader -->
-      <app-loader></app-loader>
+      <div class="loader-container" *ngIf="isLoaderLoading">
+        <div class="spinner"></div>
+      </div>
 
       <router-outlet></router-outlet>
     </div>

@@ -32,6 +32,7 @@ export class CommentsComponent implements OnInit {
     private postService: PostsService,
     private route: ActivatedRoute) {
     this.totalCommentsCount = 0;
+    this.postService.totalPostComments.next(this.totalCommentsCount);
     this.sharedService.isLoaderLoading.next(true);
     this.newComment = new Comment();
     this.selectedCommentIndexToEdit = -1;
@@ -56,6 +57,7 @@ export class CommentsComponent implements OnInit {
     if (changes.postComments && changes.postComments.currentValue) {
       this.postCommentList = changes.postComments.currentValue;
       this.totalCommentsCount = this.postCommentList.length;
+      this.postService.totalPostComments.next(this.totalCommentsCount);
       this.getUserDetailsForComment();
     }
   }
@@ -88,6 +90,7 @@ export class CommentsComponent implements OnInit {
     this.sharedService.isLoaderLoading.next(true);
     const userId = this.tokenStorageService.loggedInUserId
     this.newComment.user = userId;
+    console.log(this.tokenStorageService.getUser());
     this.newComment.post = this.postId;
     this.postService.addComment(this.newComment).subscribe(res => {
       this.sharedService.successResponse('Comment added successfully.');
@@ -132,6 +135,7 @@ export class CommentsComponent implements OnInit {
 
       this.getUserDetailsForComment();
       this.totalCommentsCount = this.postCommentList.length;
+      this.postService.totalPostComments.next(this.totalCommentsCount);
       this.postService.posts.next([]);
     },
       err => { this.errorResponse(); });
